@@ -1,16 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Character encoding that supports most modern text and symbols -->
     <meta charset="UTF-8">
+    <!-- Makes the page scale correctly on phones and tablets -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Business</title>
+    <!-- Text displayed in the browser tab -->
+    <title>MacRae's of Homosassa</title>
+    <!-- Connects this HTML page to the external CSS stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <h1>Welcome to Our Family Business</h1>
+<!-- ========================= TOP NAVIGATION BAR ========================= -->
+    <header class="navbar">
 
-    <p>This website is currently under construction.</p>
+        <!-- Business name displayed in the navigation bar as png file -->
+        <a href="#" class="logo">
+            <img src="Images/logo.png" alt="MacRae's of Homosassa Logo">
+        </a>
 
+        <!-- Navigation links that jump to sections on this page -->
+        <nav>
+            <a href="#rooms">Rooms</a>
+            <a href="#rentals">Pontoon Rentals</a>
+            <a href="#bait">Bait & Tackle</a>
+            <a href="#tiki">Tiki Bar</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+<!-- ========================= HERO SECTION First thing visitors see ========================= -->
+    <section class="hero">
+       
+        <!-- Container used to position and style hero text -->
+        <div class="hero-content">
+
+            <!-- Main headline -->
+            <h2>Waterfront Fishing, Rooms, Rentals & Good Times in Homosassa</h2>
+
+            <!-- Supporting description -->
+            <p>
+                Stay on the water, grab your bait and tackle, rent a pontoon,
+                and enjoy food and drinks at our tiki bar.
+            </p>
+
+            <!-- Button that scrolls the visitor to the contact section -->
+            <a href="#contact" class="button">Plan Your Visit</a>
+        </div>
+    </section>
+
+<!-- ========================= ROOMS SECTION Highlights lodging accommodations Uses a full-width background image similar to the hero section ========================= -->
+     <section id="rooms" class="rooms-section">
+
+        <!-- Container for all text displayed
+             on top of the room background image -->
+        <div class="rooms-content">
+        
+            <!-- Main headline -->
+            <h2>Stay Right On The Water</h2>
+        
+            <!-- Description of the accommodations -->
+            <p>
+                Enjoy waterfront accommodations with easy access
+                to fishing, boating, dining, and everything
+                Homosassa has to offer.
+            </p>
+        
+            <!-- Call-to-action button
+                 Currently scrolls to contact section -->
+            <a href="#contact" class="button">
+                Book Your Stay
+            </a>
+        
+        </div>
+        </section>
+
+<!-- ========================= Intro SECTION ========================= -->
+    <section class="intro-section">
+        <h2>
+            Stay, fish, eat, drink, and explore the water at MacRae's of Homosassa.
+        </h2>
+        <a href="#contact" class="button">Call for Reservations</a>
+    </section>
 </body>
 </html>
+
+<!-- ========================= CONTACT SECTION ========================= -->
+<section id="contact" class="contact-section">
+
+    <!-- Section title -->
+    <h2>Contact Us</h2>
+
+    <!-- Card containing business contact information -->
+    <div class="contact-card">
+
+        <!-- Business name -->
+        <h3>MacRae's of Homosassa</h3>
+
+        <!-- Physical location -->
+        <p>📍 5297 S Cherokee Way, Homosassa, FL</p>
+
+        <!-- Phone number -->
+        <p>📞 (352) XXX-XXXX</p>
+
+        <!-- Email address -->
+        <p>✉ info@macraes.com</p>
+
+        <!-- Clicking this button opens the phone dialer on mobile devices -->
+        <a href="tel:3525555555" class="contact-button">
+            Call Now
+        </a>
+
+    </div>
+
+</section>
