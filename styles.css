@@ -311,127 +311,154 @@ Removes default browser spacing so layout is easier to control
   opacity: .9;
   }
   
+
 /* =========================
-MOBILE RESPONSIVE STYLES
+   MOBILE RESPONSIVE STYLES
 
-These rules only apply when
-the screen width is 768px
-or smaller (phones and
-smaller tablets)
+   These rules only apply when
+   the screen width is 768px
+   or smaller.
 
-Desktop users will continue
-using the normal styles above.
-========================= */
+   This section controls:
+   - smaller phone text
+   - smaller phone logo
+   - hidden desktop links
+   - hamburger menu
+   - slide-out mobile sidebar
+   ========================= */
+
+/* Hamburger button is hidden on desktop */
+.menu-toggle {
+    display: none;
+}
+
+/* Slide-out menu panel
+
+   It starts off-screen to the right.
+   JavaScript adds the .active class
+   when the hamburger button is clicked.
+*/
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -280px;
+
+    width: 280px;
+    height: 100vh;
+
+    background: #17102f;
+    z-index: 999;
+
+    padding: 80px 30px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    transition: right .3s ease;
+}
+
+/* When active, slide the menu into view */
+.mobile-menu.active {
+    right: 0;
+}
+
+/* Links inside the slide-out menu */
+.mobile-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* X close button inside the mobile menu */
+.close-menu {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+
+    background: none;
+    border: none;
+
+    color: white;
+    font-size: 36px;
+}
+
+/* =========================
+   PHONE / TABLET ONLY RULES
+   ========================= */
 
 @media (max-width: 768px) {
-    /* =========================
-       MOBILE NAVIGATION BAR
-       ========================= */
-    
+
+    /* Reduces navbar spacing on phones */
     .navbar {
-    
-        /* Reduces navbar spacing on small screens */
         padding: 10px 20px;
-    
-        /* Aligns logo toward top of page */
         align-items: flex-start;
     }
-    
-    /* Smaller logo for phones */
+
+    /* Makes logo smaller on phones */
     .logo img {
-    
         height: 90px;
     }
-    
-    /* Hides navigation links on phones
-    
-       Eventually this can be replaced
-       with a hamburger menu.
-    */
+
+    /* Hides normal desktop navigation links */
     .navbar nav {
-    
         display: none;
     }
-    
-    /* =========================
-       MOBILE HEADLINES
-    
-       Makes large desktop headlines
-       fit comfortably on phone screens
-       ========================= */
-    
+
+    /* Shows hamburger button on phones */
+    .menu-toggle {
+        display: block;
+
+        background: none;
+        border: none;
+
+        color: white;
+        font-size: 36px;
+
+        z-index: 1000;
+    }
+
+    /* Makes large desktop headlines fit phones */
     .hero h2,
     .rooms-content h2,
     .rentals-content h2 {
-    
         font-size: 38px;
-    
-        /* Slightly tighter spacing between lines */
         line-height: 1.1;
     }
-    
-    /* =========================
-       MOBILE PARAGRAPH TEXT
-    
-       Reduces text size for better
-       readability on phones
-       ========================= */
-    
+
+    /* Reduces paragraph size on phones */
     .hero p,
     .rooms-content p,
     .rentals-content p {
-    
         font-size: 18px;
     }
-    
-    /* =========================
-       MOBILE SECTION SPACING
-    
-       Adjusts section height and
-       side padding for smaller screens
-       ========================= */
-    
+
+    /* Adjusts large image sections for phone screens */
     .hero,
     .rooms-section,
     .rentals-section {
-    
-        /* Slightly shorter sections on mobile */
         min-height: 85vh;
-    
-        /* Less left/right padding */
         padding: 0 6% 60px;
     }
-    
-    /* Moves hero text slightly upward */
+
+    /* Moves hero text slightly upward on phones */
     .hero-content {
-    
         padding-bottom: 60px;
     }
-    
-    /* =========================
-       INTRO SECTION
-       ========================= */
-    
+
+    /* Reduces intro headline size on phones */
     .intro-section h2 {
-    
         font-size: 30px;
     }
-    
-    /* =========================
-       CONTACT SECTION
-       ========================= */
-    
+
+    /* Reduces contact title size on phones */
     .contact-section h2 {
-    
         font-size: 30px;
     }
-    
-    /* Makes contact card fit better
-       on narrow phone screens */
+
+    /* Makes contact card fit narrow screens */
     .contact-card {
-    
         padding: 30px 20px;
     }
-    
-    }
-    
+}

@@ -13,26 +13,54 @@
 <body>
 
 <!-- ========================= TOP NAVIGATION BAR ========================= -->
-    <header class="navbar">
+<header class="navbar">
 
-        <!-- Business name displayed in the navigation bar as png file -->
-        <a href="#" class="logo">
-            <img src="images/logo.png" alt="MacRae's of Homosassa Logo">
+    <!-- Logo on the left side -->
+    <a href="#" class="logo">
+        <img src="images/logo.png" alt="MacRae's of Homosassa Logo">
+    </a>
+
+    <!-- Desktop navigation links -->
+    <nav>
+        <a href="#rooms">Rooms</a>
+        <a href="#rentals">Pontoon Rentals</a>
+        <a href="#tiki">Tiki Bar</a>
+        <a href="#contact">Contact</a>
+
+        <!-- External live camera link -->
+        <a href="https://www.discovercrystalriverfl.com/live-river-cam/"
+           target="_blank">
+            Live River Camera
         </a>
+    </nav>
 
-        <!-- Navigation links that jump to sections on this page -->
-        <nav>
-            <a href="#rooms">Rooms</a>
-            <a href="#rentals">Pontoon Rentals</a>
-            <a href="#tiki">Tiki Bar</a>
-            <a href=https://www.discovercrystalriverfl.com/live-river-cam/
-   target="_blank"
-   class="button">
-    View Live River Camera
-</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+    <!-- Mobile hamburger menu button -->
+    <button class="menu-toggle" onclick="toggleMenu()">
+        ☰
+    </button>
+
+</header>
+
+<!-- ========================= MOBILE SLIDE-OUT MENU ========================= -->
+<div id="mobile-menu" class="mobile-menu">
+
+    <!-- Close button -->
+    <button class="close-menu" onclick="toggleMenu()">
+        ×
+    </button>
+
+    <a href="#rooms" onclick="toggleMenu()">Rooms</a>
+    <a href="#rentals" onclick="toggleMenu()">Pontoon Rentals</a>
+    <a href="#tiki" onclick="toggleMenu()">Tiki Bar</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+
+    <a href="https://www.discovercrystalriverfl.com/live-river-cam/"
+       target="_blank"
+       onclick="toggleMenu()">
+        Live River Camera
+    </a>
+
+</div>
 
 <!-- ========================= HERO SECTION First thing visitors see ========================= -->
     <section class="hero">
@@ -139,6 +167,12 @@
     </div>
 
 </section>
+
+<script>
+    function toggleMenu() {
+        document.getElementById("mobile-menu").classList.toggle("active");
+    }
+</script>
 
 </body>
 </html>
