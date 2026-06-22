@@ -19,7 +19,7 @@ instead of jumping instantly
     html {
         scroll-behavior: smooth;
     }
-    
+
   /* =========================
   BODY
   Controls the default font for the whole webpage
@@ -246,6 +246,60 @@ instead of jumping instantly
     margin-bottom: 30px;
 }
 
+/* =========================
+TIKI BAR SECTION
+Full-width background image
+with text displayed on top
+========================= */
+
+.tiki-section {
+
+    /* Makes section 80% of screen height */
+    min-height: 80vh;
+
+    /* Dark overlay improves text readability */
+    background:
+        linear-gradient(
+            rgba(0,0,0,.45),
+            rgba(0,0,0,.45)
+        ),
+        url("images/tikibar.jpg");
+
+    /* Makes image fill section */
+    background-size: cover;
+
+    /* Centers image */
+    background-position: center;
+
+    /* Centers content vertically */
+    display: flex;
+    align-items: center;
+
+    /* Left and right spacing */
+    padding: 0 8%;
+
+    /* White text */
+    color: white;
+}
+
+/* Container holding tiki bar text */
+.tiki-content {
+    max-width: 700px;
+}
+
+/* Main tiki bar headline */
+.tiki-content h2 {
+    font-size: 52px;
+    margin-bottom: 20px;
+}
+
+/* Description paragraph */
+.tiki-content p {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
   /* =========================
   INTRO SECTION
   Dark statement section used for resort-style messaging
@@ -443,7 +497,8 @@ instead of jumping instantly
     /* Makes large desktop headlines fit phones */
     .hero h2,
     .rooms-content h2,
-    .rentals-content h2 {
+    .rentals-content h2,
+    .tiki-content h2 {
         font-size: 38px;
         line-height: 1.1;
     }
@@ -451,7 +506,8 @@ instead of jumping instantly
     /* Reduces paragraph size on phones */
     .hero p,
     .rooms-content p,
-    .rentals-content p {
+    .rentals-content p,
+    .tiki-content p {
         font-size: 18px;
     }
 
