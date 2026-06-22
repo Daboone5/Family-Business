@@ -1,245 +1,273 @@
 /* =========================
 GLOBAL RESET
-Removes default browser spacing so the layout is easier to control
-============================ */
+Removes default browser spacing so layout is easier to control
+========================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-/* =========================
-BODY
-Controls the default font for the whole webpage
-========================= */
-body {
-    font-family: Arial, sans-serif;
-}
-/* =========================
-NAVIGATION BAR
-Top bar that contains the business name and page links
-========================= */
-.navbar {
-    /* Places the navbar relative to the browser window */
+    }
+  
+  /* =========================
+  BODY
+  Controls the default font for the whole webpage
+  ========================= */
+  
+  body {
+  font-family: Arial, sans-serif;
+  }
+  
+  /* =========================
+  NAVIGATION BAR
+  Transparent navbar placed over the hero image
+  ========================= */
+  
+  .navbar {
     position: absolute;
-    /* Anchor navbar to top-left corner */
     top: 0;
     left: 0;
-    /* Span the full width of the page */
     width: 100%;
-    
-    /* No background so the image shows through */
-    background: transparent;
 
-    /* Default text color inside navbar */
+    background: transparent;
     color: white;
 
-    /* Space between navbar content and browser edges */
-    padding-top: 10px;
-    padding-left: 25px;
-    padding-right: 50px;
+    padding: 10px 25px 0 25px;
 
-    /* Flexbox layout: Logo on left, navigation on right */
     display: flex;
     justify-content: space-between;
-    align-items: center;
+
+    /* Align everything to the top instead of center */
+    align-items: flex-start;
 
     z-index: 100;
 }
-/* =========================
-BUSINESS LOGO
-PNG image displayed in navbar
-========================= */
-.logo img {
-    /* Controls logo size */
-    height: 150px;
-    /* Maintains original image proportions */
-    width: auto;
-}
-/* =========================
-NAVIGATION LINKS
-Rooms, Rentals, Tiki Bar, etc.
-========================= */
-.navbar a {
-    /* Link color */
-    color: white;
-    text-decoration: none;
-    /* Space between links */
-    margin-left: 20px;
-    font-weight: bold;
-}
-/* Fine-tunes navigation position */
-.navbar nav {
+  
+  /* =========================
+  BUSINESS LOGO
+  PNG image displayed inside the navbar
+  ========================= */
+  
+  .logo img {
+  /* Controls logo size */
+  height: 150px;
+  
 
-    /* Negative value moves navigation upward */
-    margin-top: -120px;
-}
-/* =========================
-HERO SECTION
-Large top section with background image and headline
-========================= */
-.hero {
-    min-height: 100vh;
-    /* Dark overlay plus background image */
-    background:
-        linear-gradient(rgba(8, 18, 35, .55), rgba(8, 18, 35, .55)),
-        url("images/waterfront.jpg");
-    /* Controls how the image fits inside the hero section */
-    background-size: cover;
-    /* Controls which part of the image is centered */
-    background-position: center;
-    display: flex;
-    align-items: flex-end;
-    padding: 0 8% 90px;
-    color: white;
-}
-/* Limits the width of the hero text so it does not stretch too far */
-.hero-content {
-    max-width: 950px;
-    padding-bottom: 120px;
-}
-/* Main hero headline */
-.hero h2 {
-    font-size: 64px;
-    line-height: 1.05;
-    margin-bottom: 25px;
-}
-/* Hero paragraph text */
-.hero p {
-    font-size: 22px;
-    max-width: 650px;
-}
-/* Main orange call-to-action button */
-.button {
-    display: inline-block;
-    background: #f4a261;
-    color: #111;
-    padding: 15px 28px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-}
-/* =========================
-ROOMS SECTION
-Large background image with
-text displayed on top
-Similar layout to hero section
-========================= */
-.rooms-section {
+  /* Keeps logo proportions correct */
+  width: auto;
 
-    /* Makes section 80% of screen height */
-    min-height: 80vh;
-    
-    /* Adds dark overlay on top of image
-       for better text readability */
-    background:
-        linear-gradient(
-            rgba(0,0,0,.45),
-            rgba(0,0,0,.45)
-        ),
-        url("images/room.jpg");
-    
-    /* Expands image to completely fill section */
-    background-size: cover;
-    
-    /* Controls which part of image is visible */
-    background-position: center;
-    
-    /* Uses Flexbox for content positioning */
-    display: flex;
-    
-    /* Centers content vertically */
-    align-items: center;
-    
-    /* Adds left and right spacing */
-    padding: 0 8%;
-    
-    /* Makes text white */
-    color: white;
-    
-    }
-    /* =========================
-    ROOMS CONTENT CONTAINER
-    Holds heading, paragraph,
-    and button
-    ========================= */
-    .rooms-content {
-    
-    /* Prevents text from becoming too wide */
-    max-width: 700px;
-    }
-    /* Main headline */
-    .rooms-content h2 {
-    font-size: 52px;
-    margin-bottom: 20px;
-    }
-    /* Description paragraph */
-    .rooms-content p {
-    font-size: 20px;
-    
-    /* Controls spacing between text lines */
-    line-height: 1.6;
-    margin-bottom: 30px;
-    }
-    
-/* =========================
-CONTACT SECTION
-Area below the hero section containing the contact card
-========================= */
-.contact-section {
-    padding: 80px 8%;
-    background-color: #f5f5f5;
-    text-align: center;
+  
+  }
+  
+  /* =========================
+  NAVIGATION LINKS
+  Rooms, Rentals, Bait & Tackle, Tiki Bar, Contact
+  ========================= */
+  
+  .navbar a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: bold;
+  }
+  
+  /* Moves only the navigation links upward without moving the logo */
+  .navbar nav {
+    padding-top: 5px;
 }
-/* Contact section title */
-.contact-section h2 {
-    margin-bottom: 40px;
-    font-size: 36px;
-    color: #0b3d3f;
-}
-/* White card that holds the business contact information */
-.contact-card {
-    max-width: 600px;
-    margin: auto;
-    background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.1);
-}
-/* Business name inside the contact card */
-.contact-card h3 {
-    margin-bottom: 20px;
-    color: #0b3d3f;
-}
-/* Contact details inside the card */
-.contact-card p {
-    margin: 12px 0;
-    font-size: 18px;
-}
-/* Contact button inside the card */
-.contact-button {
-    display: inline-block;
-    margin-top: 25px;
-    background: #f4a261;
-    color: #111;
-    text-decoration: none;
-    padding: 14px 28px;
-    border-radius: 6px;
-    font-weight: bold;
-}
-/* Slight visual change when the user hovers over the contact button */
-.contact-button:hover {
-    opacity: .9;
-}
-/*xxxxx */
-.intro-section {
-    background: #17102f;
-    color: white;
-    padding: 80px 8%;
-}
+  
+  /* Changes link color slightly when user hovers */
+  .navbar a:hover {
+  color: #f4a261;
+  }
+  
+  /* =========================
+  HERO SECTION
+  Large top section with background image and main headline
+  ========================= */
+  .hero {
+  /* Makes hero fill the full browser height */
+  min-height: 100vh;
+  
+  
+  /* Adds dark overlay over background image for readable text */
+  background:
+      linear-gradient(rgba(8, 18, 35, .55), rgba(8, 18, 35, .55)),
+      url("images/waterfront.jpg");
+  
+  /* Makes image cover the entire hero area */
+  background-size: cover;
+  
+  /* Centers background image */
+  background-position: center;
+  
+  /* Places hero content near bottom */
+  display: flex;
+  align-items: flex-end;
+  
+  /* Adds spacing around hero content */
+  padding: 0 8% 90px;
+  
+  color: white;
+  }
+  
+  /* Limits width of hero text */
+  .hero-content {
+  max-width: 950px;
+  padding-bottom: 120px;
+  }
+  
+  /* Main hero headline */
+  .hero h2 {
+  font-size: 64px;
+  line-height: 1.05;
+  margin-bottom: 25px;
+  }
+  
+  /* Hero paragraph text */
+  .hero p {
+  font-size: 22px;
+  max-width: 650px;
+  }
+  
+  /* =========================
+  SHARED BUTTON STYLE
+  Used for call-to-action buttons
+  ========================= */
+  
+  .button {
+  display: inline-block;
+  background: #f4a261;
+  color: #111;
+  padding: 15px 28px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  }
+  
+  /* =========================
+  ROOMS SECTION
+  Full-width background image with text displayed on top
+  ========================= */
+  
+  .rooms-section {
+  /* Makes section 80% of browser height */
+  min-height: 80vh;
+  
 
-.intro-section h2 {
-    font-size: 42px;
-    line-height: 1.2;
-    max-width: 1100px;
-    margin-bottom: 30px;
-}
+  /* Adds dark overlay over room image */
+  background:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url("images/room.jpg");
+  
+  /* Makes image cover the whole section */
+  background-size: cover;
+  
+  /* Centers image */
+  background-position: center;
+  
+  /* Uses Flexbox to position text */
+  display: flex;
+  align-items: center;
+  
+  /* Adds left and right spacing */
+  padding: 0 8%;
+  
+  color: white;
+
+  
+  }
+  
+  /* Limits width of rooms text */
+  .rooms-content {
+  max-width: 700px;
+  }
+  
+  /* Rooms headline */
+  .rooms-content h2 {
+  font-size: 52px;
+  margin-bottom: 20px;
+  }
+  
+  /* Rooms description */
+  .rooms-content p {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  }
+  
+  /* =========================
+  INTRO SECTION
+  Dark statement section used for resort-style messaging
+  ========================= */
+  
+  .intro-section {
+  background: #17102f;
+  color: white;
+  padding: 80px 8%;
+  }
+  
+  /* Intro section headline */
+  .intro-section h2 {
+  font-size: 42px;
+  line-height: 1.2;
+  max-width: 1100px;
+  margin-bottom: 30px;
+  }
+  
+  /* =========================
+  CONTACT SECTION
+  Area containing the contact card
+  ========================= */
+  
+  .contact-section {
+  padding: 80px 8%;
+  background-color: #f5f5f5;
+  text-align: center;
+  }
+  
+  /* Contact section title */
+  .contact-section h2 {
+  margin-bottom: 40px;
+  font-size: 36px;
+  color: #0b3d3f;
+  }
+  
+  /* White card that holds contact information */
+  .contact-card {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.1);
+  }
+  
+  /* Business name inside contact card */
+  .contact-card h3 {
+  margin-bottom: 20px;
+  color: #0b3d3f;
+  }
+  
+  /* Contact details inside card */
+  .contact-card p {
+  margin: 12px 0;
+  font-size: 18px;
+  }
+  
+  /* Contact button inside card */
+  .contact-button {
+  display: inline-block;
+  margin-top: 25px;
+  background: #f4a261;
+  color: #111;
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-weight: bold;
+  }
+  
+  /* Slight visual change when user hovers over contact button */
+  .contact-button:hover {
+  opacity: .9;
+  }
