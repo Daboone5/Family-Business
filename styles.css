@@ -174,8 +174,6 @@ Removes default browser spacing so layout is easier to control
   padding: 0 8%;
   
   color: white;
-
-  
   }
   
   /* Limits width of rooms text */
@@ -196,6 +194,47 @@ Removes default browser spacing so layout is easier to control
   margin-bottom: 30px;
   }
   
+  /* =========================
+   PONTOON RENTALS SECTION
+   Full-width background image with text overlay
+   ========================= */
+
+.rentals-section {
+    min-height: 80vh;
+
+    background:
+        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+        url("images/pontoon.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 8%;
+
+    color: white;
+}
+
+/* Limits width of pontoon rental text */
+.rentals-content {
+    max-width: 700px;
+}
+
+/* Pontoon section headline */
+.rentals-content h2 {
+    font-size: 52px;
+    margin-bottom: 20px;
+}
+
+/* Pontoon section description */
+.rentals-content p {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
   /* =========================
   INTRO SECTION
   Dark statement section used for resort-style messaging
