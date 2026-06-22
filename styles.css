@@ -1,8 +1,8 @@
 /* =========================
 GLOBAL RESET
 Removes default browser spacing so the layout is easier to control
-========================= */* 
-{
+============================ */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -54,10 +54,6 @@ PNG image displayed in navbar
     height: 150px;
     /* Maintains original image proportions */
     width: auto;
-}
-/* Business name inside the navbar ---- currently unused -- using logo instead -- but i dont want to delete this because it may bug the index code */
-.navbar h1 {
-    font-size: 24px;
 }
 /* =========================
 NAVIGATION LINKS
@@ -140,7 +136,7 @@ Similar layout to hero section
             rgba(0,0,0,.45),
             rgba(0,0,0,.45)
         ),
-        url("Images/room.jpg");
+        url("images/room.jpg");
     
     /* Expands image to completely fill section */
     background-size: cover;
@@ -170,31 +166,21 @@ Similar layout to hero section
     
     /* Prevents text from becoming too wide */
     max-width: 700px;
-    
     }
-    
     /* Main headline */
-    
     .rooms-content h2 {
-    
     font-size: 52px;
-    
     margin-bottom: 20px;
-    
     }
-    
     /* Description paragraph */
-    
     .rooms-content p {
-    
     font-size: 20px;
     
     /* Controls spacing between text lines */
     line-height: 1.6;
-    
     margin-bottom: 30px;
-    
     }
+    
 /* =========================
 CONTACT SECTION
 Area below the hero section containing the contact card
