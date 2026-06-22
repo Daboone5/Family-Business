@@ -72,7 +72,7 @@ Removes default browser spacing so layout is easier to control
   }
   
   /* Moves only the navigation links upward without moving the logo */
-  .navbar nav {
+  .desktop-nav {
     padding-top: 5px;
 }
   
@@ -356,6 +356,9 @@ Removes default browser spacing so layout is easier to control
     gap: 25px;
 
     transition: right .3s ease;
+
+/* Hide anything that sticks outside the panel */
+     overflow-y: auto;
 }
 
 /* When active, slide the menu into view */
@@ -402,8 +405,8 @@ Removes default browser spacing so layout is easier to control
     }
 
     /* Hides normal desktop navigation links */
-    .navbar nav {
-        display: none;
+    .desktop-nav {
+        display: none !important;
     }
 
     /* Shows hamburger button on phones */
