@@ -346,7 +346,7 @@ Removes default browser spacing so layout is easier to control
     width: 280px;
     height: 100vh;
 
-    background: rgba(23, 16, 47, 0.45);
+    background: rgba(23, 16, 47, 0.15);
     
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
