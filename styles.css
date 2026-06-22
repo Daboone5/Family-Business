@@ -8,7 +8,18 @@ Removes default browser spacing so layout is easier to control
     padding: 0;
     box-sizing: border-box;
     }
-  
+
+/* =========================
+SMOOTH SCROLLING
+Makes navigation links scroll
+smoothly between sections
+instead of jumping instantly
+========================= */
+
+    html {
+        scroll-behavior: smooth;
+    }
+    
   /* =========================
   BODY
   Controls the default font for the whole webpage
