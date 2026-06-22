@@ -348,8 +348,12 @@ Removes default browser spacing so layout is easier to control
 
     background: rgba(23, 16, 47, 0.15);
     
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /* Subtle glowing edge */
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+   
     z-index: 999;
 
     padding: 80px 30px;
