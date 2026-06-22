@@ -514,7 +514,8 @@ with text displayed on top
     /* Adjusts large image sections for phone screens */
     .hero,
     .rooms-section,
-    .rentals-section {
+    .rentals-section,
+    .tiki-section {
         min-height: 85vh;
         padding: 0 6% 60px;
     }
