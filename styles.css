@@ -413,7 +413,46 @@ Displays the business location
 }
 
 /* =========================
-   MOBILE RESPONSIVE STYLES
+GET DIRECTIONS BUTTON
+Appears below Google Map
+========================= */
+
+.directions-container {
+
+    text-align: center;
+
+    margin-top: 30px;
+}
+
+/* =========================
+FOOTER
+Bottom section of website
+========================= */
+
+.footer {
+
+    background: #17102f;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 50px 20px;
+}
+
+.footer h3 {
+
+    margin-bottom: 15px;
+}
+
+.footer p {
+
+    margin: 10px 0;
+}
+
+/* =========================
+-----start of mobile section----  
+MOBILE RESPONSIVE STYLES
 
    These rules only apply when
    the screen width is 768px
