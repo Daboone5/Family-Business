@@ -1,7 +1,12 @@
-const MUSIC_API_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+const MUSIC_API_URL = "https://script.google.com/macros/s/AKfycbxxBJr35sSKMl_9DKArJO-gAAA5jLDaR-iXJgbOhypjCMQHyNpTkHJWOjKreMgaAIDLMQ/exec";
 
 async function loadMusicEvents() {
     const container = document.getElementById("music-events");
+
+    // Stop the script if this page does not have the music events container
+    if (!container) {
+        return;
+    }
 
     try {
         const response = await fetch(MUSIC_API_URL);
