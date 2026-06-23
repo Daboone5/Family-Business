@@ -1,4 +1,4 @@
-const MUSIC_API_URL = "https://script.google.com/macros/s/AKfycbwFtag0ebjZrPqL_pkzMsTMKmZWEXnSmM5LyOp_ZDoR/dev";
+const MUSIC_API_URL = "https://script.google.com/macros/s/AKfycbyKqmX9z0b72C66RKRaCeMkAKiuEfQKlzlT7ni4FncjMid9y8TQbozHjmXYUIoTCLdkCg/exec";
 
 function handleMusicEvents(data) {
     const container = document.getElementById("music-events");
