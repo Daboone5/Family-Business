@@ -37,18 +37,12 @@ function handleMusicEvents(data) {
         return new Date(a.start) - new Date(b.start);
     });
 
-    /* =================================================
-       FEATURED EVENT
-       First event becomes the large featured event
-    ================================================= */
-
-    const featuredEvent = sortedEvents[0];
 
     /* =================================================
-       NEXT 4 UPCOMING EVENTS
+       NEXT 5 UPCOMING EVENTS
     ================================================= */
 
-    const upcomingEvents = sortedEvents.slice(1, 5);
+    const upcomingEvents = sortedEvents.slice(0, 5);
 
     container.innerHTML = "";
 

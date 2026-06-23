@@ -477,20 +477,6 @@ LIVE MUSIC PAGE
     font-size: 22px;
 }
 
-.music-calendar {
-
-    padding: 40px 8%;
-
-    background: #f5f5f5;
-}
-
-.music-calendar iframe {
-
-    border-radius: 12px;
-
-    box-shadow: 0 5px 20px rgba(0,0,0,.1);
-}
-
 .music-back {
 
     text-align: center;
@@ -513,19 +499,22 @@ UPCOMING LIVE MUSIC CARDS
     margin-bottom: 40px;
 }
 
+/* Container holding all event cards */
 .music-events {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     gap: 25px;
 }
 
-.music-card {
-    width: 300px;
-}
 
-/* controls the border - customization for the event card background */
+/* Event card styling */
 .music-card {
+
+    width: 80%;
+    max-width: 1000px;
+    min-height: 180px;
+
     background: rgba(23,16,47,.9);
 
     color: white;
@@ -536,11 +525,13 @@ UPCOMING LIVE MUSIC CARDS
 
     padding: 25px;
 
-    margin-bottom: 25px;
-
     box-shadow: 0 10px 25px rgba(0,0,0,.35);
 
     transition: all .3s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .music-card:hover {
@@ -551,7 +542,9 @@ UPCOMING LIVE MUSIC CARDS
     box-shadow: 0 15px 35px rgba(255,215,0,.2);
 }
 
+/* Band Name */
 .music-card h3 {
+
     color: white;
 
     font-size: 36px;
@@ -565,53 +558,26 @@ UPCOMING LIVE MUSIC CARDS
     letter-spacing: 1px;
 }
 
+/* Date and Time */
 .music-card p {
+
     color: rgba(255,255,255,.9);
 
     font-size: 18px;
 }
 
+/* Description */
 .music-description {
+
     margin-top: 15px;
+
     font-size: 16px;
+
     line-height: 1.6;
+
     font-style: italic;
+
     opacity: 0.85;
-}
-
-.featured-music-card {
-
-    background: rgba(23,16,47,.95);
-
-    color: white;
-
-    border: 3px solid #c89b3c;
-
-    border-radius: 25px;
-
-    padding: 40px;
-
-    margin-bottom: 40px;
-
-    text-align: center;
-
-    box-shadow: 0 15px 35px rgba(0,0,0,.35);
-}
-
-.featured-music-card h2 {
-
-    color: #c89b3c;
-
-    margin-bottom: 15px;
-
-    text-transform: uppercase;
-}
-
-.featured-music-card h3 {
-
-    font-size: 42px;
-
-    color: white;
 }
 
 /* =========================
