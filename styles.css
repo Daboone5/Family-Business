@@ -539,8 +539,9 @@ UPCOMING LIVE MUSIC CARDS
 .music-description {
     margin-top: 15px;
     font-size: 16px;
-    line-height: 1.5;
-    color: #555;
+    line-height: 1.6;
+    font-style: italic;
+    opacity: 0.85;
 }
 
 /* =========================
