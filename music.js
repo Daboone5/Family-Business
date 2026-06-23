@@ -42,8 +42,26 @@ function handleMusicEvents(data) {
 }
 
 function loadMusicEvents() {
+    const container = document.getElementById("music-events");
+
     const script = document.createElement("script");
-    script.src = MUSIC_API_URL + "?callback=handleMusicEvents";
+
+    script.src = MUSIC_API_URL 
+        + "?callback=handleMusicEvents"
+        + "&v=" + new Date().getTime();
+
+    script.onerror = function () {
+        if (container) {
+            container.innerHTML = "<p>Live music schedule is currently unavailable.</p>";
+        }
+    };
+
+    setTimeout(function () {
+        if (container && container.innerHTML.includes("Loading")) {
+            container.innerHTML = "<p>Live music schedule is taking too long to load. Please refresh the page.</p>";
+        }
+    }, 8000);
+
     document.body.appendChild(script);
 }
 
