@@ -514,26 +514,61 @@ UPCOMING LIVE MUSIC CARDS
 }
 
 .music-events {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 25px;
 }
 
 .music-card {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.1);
+    width: 300px;
+}
+
+/* controls the border - customization for the event card background */
+.music-card {
+    background: rgba(23,16,47,.9);
+
+    color: white;
+
+    border: 2px solid #c89b3c;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.35);
+
+    transition: all .3s ease;
+}
+
+.music-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #ffd700;
+
+    box-shadow: 0 15px 35px rgba(255,215,0,.2);
 }
 
 .music-card h3 {
-    color: #0b3d3f;
+    color: white;
+
+    font-size: 36px;
+
     margin-bottom: 15px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
 }
 
 .music-card p {
+    color: rgba(255,255,255,.9);
+
     font-size: 18px;
-    margin: 8px 0;
 }
 
 .music-description {
@@ -542,6 +577,41 @@ UPCOMING LIVE MUSIC CARDS
     line-height: 1.6;
     font-style: italic;
     opacity: 0.85;
+}
+
+.featured-music-card {
+
+    background: rgba(23,16,47,.95);
+
+    color: white;
+
+    border: 3px solid #c89b3c;
+
+    border-radius: 25px;
+
+    padding: 40px;
+
+    margin-bottom: 40px;
+
+    text-align: center;
+
+    box-shadow: 0 15px 35px rgba(0,0,0,.35);
+}
+
+.featured-music-card h2 {
+
+    color: #c89b3c;
+
+    margin-bottom: 15px;
+
+    text-transform: uppercase;
+}
+
+.featured-music-card h3 {
+
+    font-size: 42px;
+
+    color: white;
 }
 
 /* =========================
@@ -720,6 +790,6 @@ LIVE MUSIC MOBILE STYLES
 }
 
 .music-card {
-    padding: 20px;
+    width: 100%;
 }
-}
+}   
