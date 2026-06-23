@@ -536,6 +536,13 @@ UPCOMING LIVE MUSIC CARDS
     margin: 8px 0;
 }
 
+.music-description {
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
 /* =========================
 -----start of mobile section----  
 MOBILE RESPONSIVE STYLES

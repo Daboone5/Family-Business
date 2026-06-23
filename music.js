@@ -35,6 +35,7 @@ function handleMusicEvents(data) {
             <h3>${event.title}</h3>
             <p>${formattedDate}</p>
             <p>${formattedTime}</p>
+            <p class="music-description">${event.description || "Live music at MacRae's"}</p>
         `;
 
         container.appendChild(card);
