@@ -1,20 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Supports modern text and symbols -->
     <meta charset="UTF-8">
+
+    <!-- Makes page scale correctly on phones -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Browser tab title -->
     <title>Tiki Bar Menu | MacRae's of Homosassa</title>
+
+    <!-- Connects this page to your main CSS file -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
+<!-- =========================
+MENU HEADER
+Top section for the menu page
+========================= -->
+
 <section class="menu-header">
+
     <h1>The Shed Menu</h1>
-    <p>Tiki Bar food, drinks, seafood, wings, burgers, tacos, and more.</p>
-    <a href="index.html" class="button">Return to Main Website</a>
+
+    <p>
+        Tiki Bar food, drinks, seafood, wings, burgers, tacos, and more.
+    </p>
+
+    <a href="index.html" class="button">
+        Return to Main Website
+    </a>
+
 </section>
 
-<section class="menu-section">
+<!-- =========================
+DESKTOP PDF MENU
+Shown on desktop/laptop screens only
+========================= -->
+
+<section class="desktop-menu-pdf">
+
+    <iframe
+        src="documents/menu.pdf"
+        width="100%"
+        height="900"
+        style="border:0;">
+    </iframe>
+
+</section>
+
+<!-- =========================
+MOBILE HTML MENU
+Shown on phones/tablets only
+Easier to read than a PDF on small screens
+========================= -->
+
+<section class="mobile-menu-html">
 
     <div class="menu-category">
         <h2>Appetizers</h2>
@@ -99,8 +142,14 @@
 
 </section>
 
+<!-- =========================
+BOTTOM RETURN BUTTON
+========================= -->
+
 <section class="music-back">
-    <a href="index.html" class="button">Return to Main Website</a>
+    <a href="index.html" class="button">
+        Return to Main Website
+    </a>
 </section>
 
 </body>
