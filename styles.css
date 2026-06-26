@@ -244,24 +244,6 @@ body {
     margin-bottom: 30px;
 }
 
-/* =========================
-   INTRO SECTION
-   Dark statement section.
-   ========================= */
-
-.intro-section {
-    background: #17102f;
-    color: white;
-
-    padding: 80px 8%;
-}
-
-.intro-section h2 {
-    font-size: 42px;
-    line-height: 1.2;
-    max-width: 1100px;
-    margin-bottom: 30px;
-}
 
 /* =========================
    GOOGLE MAP SECTION
@@ -533,20 +515,44 @@ body {
     font-size: 20px;
     margin-bottom: 30px;
 }
-
 /* =========================
-   DESKTOP PDF MENU
-   Shown on desktop/laptop screens.
-   ========================= */
+MENU BACKGROUND
+Used by both desktop and mobile
+========================= */
 
-   .desktop-menu-image {
+.menu-background {
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.25),
+            rgba(0,0,0,.25)
+        ),
+        url("images/pavers.jpg");
+
+    background-size: cover;
+
+    background-position: bottom;
+
+    background-repeat: no-repeat;
+
+    padding: 60px 0;
+}
+
+.desktop-menu-image {
+
     display: flex;
+
     justify-content: center;
+
+    align-items: flex-start;
+
     gap: 30px;
-    padding: 60px 8%;
-    background: #f5f5f5;
-    text-align: center;
+
     flex-wrap: wrap;
+
+    padding: 60px 8%;
+
+    text-align: center;
 }
 
 .desktop-menu-image img {
@@ -566,26 +572,49 @@ body {
    Hidden on desktop, shown on phones.
    ========================= */
 
-.mobile-menu-html {
+   .mobile-menu-html {
     display: none;
 }
+/* =========================
+   MOBILE MENU CATEGORY CARD
+========================= */
 
-/* Menu category cards used on mobile */
 .menu-category {
-    background: white;
+
+    background: rgba(255,255,255,.88);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 
     padding: 30px;
 
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(0,0,0,.12);
+    border-radius: 20px;
+
+    border: 1px solid rgba(255,255,255,.35);
+
+    box-shadow: 0 12px 30px rgba(0,0,0,.25);
+
+    transition: all .3s ease;
+}
+
+.menu-category:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 16px 35px rgba(0,0,0,.3);
 }
 
 .menu-category h2 {
+
     color: #0b3d3f;
 
-    margin-bottom: 20px;
+    font-size: 30px;
 
-    font-size: 28px;
+    margin-bottom: 18px;
+
+    padding-bottom: 10px;
+
+    border-bottom: 2px solid #c89b3c;
 }
 
 .menu-category p {
@@ -779,8 +808,6 @@ body {
         display: grid;
 
         padding: 60px 6%;
-
-        background: #f5f5f5;
 
         gap: 25px;
     }
