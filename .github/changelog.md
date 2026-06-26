@@ -12,3 +12,20 @@
 - Redesigned homepage
 - Added booking popup
 - Added Facebook button
+
+## v1.1 – SEO & Site Improvements
+
+### Added
+- Google Search Console verification
+- sitemap.xml
+- robots.txt
+- Open Graph metadata
+- Twitter/X metadata
+- Favicon support
+
+### Improved
+- Homepage SEO title and description
+- Menu page SEO
+- Live Music page SEO
+- Search engine indexing
+- Social media sharing previews
