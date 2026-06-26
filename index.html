@@ -271,12 +271,15 @@ WEATHER SECTION
 
 <section class="weather-section">
 
-    <h2>Homosassa Conditions</h2>
+    <h2>Homosassa River Conditions</h2>
 
-    <div class="custom-weather-card" id="weather-card">
+    <div class="weather-subtitle">
+        <span>Marine Forecast</span>
+        <span>Mouth of the Homosassa River</span>
+    </div>
 
-        <p>Loading local weather...</p>
-
+    <div id="weather-card" class="custom-weather-card">
+        Loading weather...
     </div>
 
 </section>
@@ -479,17 +482,6 @@ function getWeatherIcon(code) {
     return "🌤️";
 }
 
-function getWeatherLabel(code) {
-    if (code === 0) return "Clear";
-    if ([1, 2].includes(code)) return "Partly Cloudy";
-    if (code === 3) return "Cloudy";
-    if ([45, 48].includes(code)) return "Fog";
-    if ([51, 53, 55].includes(code)) return "Drizzle";
-    if ([61, 63, 65, 80, 81, 82].includes(code)) return "Rain";
-    if ([95, 96, 99].includes(code)) return "Thunderstorms";
-    return "Conditions";
-}
-
 function getWindDirection(degrees) {
     const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
     return directions[Math.round(degrees / 45) % 8];
@@ -499,38 +491,6 @@ function getBoatingOutlook(windSpeed, rainChance) {
     if (windSpeed >= 20 || rainChance >= 70) return "Use Caution";
     if (windSpeed >= 12 || rainChance >= 40) return "Fair";
     return "Good";
-}
-
-function getRiverSummary(currentLabel, boatingOutlook, windSpeed, rainChance) {
-    if (currentLabel === "Thunderstorms" || rainChance >= 70) {
-        return "Thunderstorms or heavy rain are possible today. Boaters should monitor conditions closely before heading out on the river.";
-    }
-
-    if (currentLabel === "Rain" || rainChance >= 50) {
-        return "Showers are possible today. Outdoor plans may still be enjoyable, but keep an eye on the forecast.";
-    }
-
-    if (windSpeed >= 20) {
-        return "Windy conditions are expected today. Smaller boats should use caution on the river.";
-    }
-
-    if (windSpeed >= 12) {
-        return "Breezy conditions today. Boating can still be enjoyable, but expect a little chop on open water.";
-    }
-
-    if (boatingOutlook === "Good" && rainChance < 30) {
-        return "Great conditions for enjoying the Homosassa River, pontoon rentals, and waterfront dining.";
-    }
-
-    if (currentLabel === "Partly Cloudy") {
-        return "A comfortable mix of sun and clouds today. Good weather for relaxing by the water.";
-    }
-
-    if (currentLabel === "Clear") {
-        return "Sunny skies make it a great day to enjoy MacRae's and the Homosassa River.";
-    }
-
-    return "Check current conditions before heading out, and enjoy your time on the Homosassa River.";
 }
 
 function formatTime(timeString) {
@@ -630,11 +590,48 @@ function getDailySummary(date, hourly) {
         summary = { icon: "☀️", label: "Sunny" };
     }
 
-    if (timingNote) {
-        summary.note = timingNote;
+    summary.note = timingNote;
+    return summary;
+}
+
+function getDailyNarrative(summary, boatingOutlook, windSpeed, rainChance) {
+    if (windSpeed >= 20) {
+        return "Windy conditions are expected today. Smaller vessels should use caution on the Homosassa River.";
     }
 
-    return summary;
+    if (summary.label === "Storms Likely") {
+        return `Scattered thunderstorms are expected ${summary.note || "today"}. Visitors planning time on the river should monitor changing weather conditions.`;
+    }
+
+    if (summary.label === "Storms Possible") {
+        return `A few thunderstorms may develop ${summary.note || "later today"}. Boating conditions may still be favorable at times, but check the radar before heading out.`;
+    }
+
+    if (summary.label === "Rain Likely") {
+        return `Periods of rain are expected ${summary.note || "today"}. Outdoor plans may be affected, but it can still be a good day to enjoy the tiki bar and waterfront views.`;
+    }
+
+    if (summary.label === "Showers Possible") {
+        return `Showers are possible ${summary.note || "today"}. There should still be opportunities to enjoy the Homosassa River between passing showers.`;
+    }
+
+    if (windSpeed >= 12 || boatingOutlook === "Fair") {
+        return "Breezy conditions are expected today. Boating can still be enjoyable, but expect a little chop on open water.";
+    }
+
+    if (summary.label === "Mostly Cloudy") {
+        return "Mostly cloudy skies today, but conditions should remain comfortable for visiting the waterfront, dining, and relaxing by the river.";
+    }
+
+    if (summary.label === "Partly Cloudy") {
+        return "A warm mix of sun and clouds should make for a pleasant day on the Homosassa River.";
+    }
+
+    if (summary.label === "Sunny") {
+        return "Sunny skies and light winds make today a great day for pontoon rentals, fishing, and waterfront dining.";
+    }
+
+    return "Check current conditions before heading out, and enjoy your time on the Homosassa River.";
 }
 
 async function loadWeather() {
@@ -642,8 +639,8 @@ async function loadWeather() {
 
     const url =
         "https://api.open-meteo.com/v1/forecast" +
-        "?latitude=28.7846" +
-        "&longitude=-82.6210" +
+        "?latitude=28.7716" +
+        "&longitude=-82.6957" +
         "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m" +
         "&hourly=precipitation_probability,uv_index,weather_code" +
         "&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code,sunrise,sunset" +
@@ -659,21 +656,16 @@ async function loadWeather() {
         const hourly = data.hourly;
         const daily = data.daily;
 
-        const rainChance = hourly.precipitation_probability
-            ? hourly.precipitation_probability[0]
-            : "N/A";
+        const todaySummary = getDailySummary(daily.time[0], hourly);
 
-        const uvIndex = hourly.uv_index
-            ? hourly.uv_index[0]
-            : "N/A";
+        const rainChance = daily.precipitation_probability_max[0];
+        const uvIndex = hourly.uv_index ? hourly.uv_index[0] : "N/A";
 
-        const currentIcon = getWeatherIcon(current.weather_code);
-        const currentLabel = getWeatherLabel(current.weather_code);
         const windDirection = getWindDirection(current.wind_direction_10m);
         const boatingOutlook = getBoatingOutlook(current.wind_speed_10m, rainChance);
 
-        const riverSummary = getRiverSummary(
-            currentLabel,
+        const riverSummary = getDailyNarrative(
+            todaySummary,
             boatingOutlook,
             current.wind_speed_10m,
             rainChance
@@ -702,9 +694,9 @@ async function loadWeather() {
             <div class="weather-main">
 
                 <div class="weather-current">
-                    <div class="weather-icon">${currentIcon}</div>
+                    <div class="weather-icon">${todaySummary.icon}</div>
                     <h3>${Math.round(current.temperature_2m)}°F</h3>
-                    <p>${currentLabel}</p>
+                    <p>${todaySummary.label}</p>
                     <p class="river-summary">${riverSummary}</p>
                     <p>Feels like ${Math.round(current.apparent_temperature)}°F</p>
                 </div>

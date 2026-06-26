@@ -4,6 +4,7 @@
 - Drone video on homepage
 - Sunset background for menu
 - Seasonal homepage banner
+- include CSP/XFO code for security
 
 ## Tiki Bar
 - Daily specials
