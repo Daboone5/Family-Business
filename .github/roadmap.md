@@ -17,6 +17,8 @@
 - Band social media links
 - Weather widget
 - FAQ page
+- Make hamburger follow user anywhere on page
+- communitiy / guides association 
 
 ---
 
