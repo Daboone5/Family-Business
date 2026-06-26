@@ -373,6 +373,19 @@ CUSTOM WEATHER SECTION
         font-size: 52px;
     }
 }
+.weather-current {
+    text-align: center;
+}
+
+.weather-icon {
+    font-size: 64px;
+    margin-bottom: 10px;
+}
+
+.forecast-icon {
+    font-size: 34px;
+    margin: 8px 0;
+}
 
 /* =========================
 7-DAY FORECAST
@@ -404,6 +417,12 @@ CUSTOM WEATHER SECTION
     margin: 6px 0;
 }
 
+.forecast-note {
+    font-size: 13px;
+    opacity: 0.85;
+    font-style: italic;
+}
+
 @media (max-width: 1000px) {
     .forecast-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -415,6 +434,7 @@ CUSTOM WEATHER SECTION
         grid-template-columns: 1fr;
     }
 }
+
 
 /* =========================
    GOOGLE MAP SECTION
