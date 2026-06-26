@@ -10,6 +10,42 @@
     <!-- Connects this HTML page to the external CSS stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
+<!-- =========================
+BOOKING COMING SOON POPUP
+========================= -->
+
+<div id="booking-popup" class="booking-popup">
+
+    <div class="booking-card">
+
+        <button class="booking-close" onclick="hideBookingMessage()">
+            ×
+        </button>
+
+        <h2>Online Booking Coming Soon</h2>
+
+        <p>
+            For now, please contact us by phone for future reservations.
+        </p>
+
+        <a href="tel:3526282602" class="button">
+            Call Now
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+    function showBookingMessage() {
+        document.getElementById("booking-popup").classList.add("active");
+    }
+
+    function hideBookingMessage() {
+        document.getElementById("booking-popup").classList.remove("active");
+    }
+</script>
 <body>
 
 <!-- ========================= TOP NAVIGATION BAR ========================= -->
@@ -68,7 +104,7 @@
 
             <!-- Supporting description -->
             <p>
-                Stay on the water, grab your bait and tackle, Fuel up, rent a pontoon,
+                Stay on the water, grab your bait and tackle, fuel up, rent a pontoon,
                 and enjoy food and drinks at our tiki bar.
             </p>
 
@@ -94,9 +130,9 @@
         
             <!-- Call-to-action button
                  Currently scrolls to contact section -->
-            <a href="#contact" class="button">
-                Book Your Stay
-            </a>
+                 <a href="#" class="button" onclick="showBookingMessage()">
+                    Book Your Stay
+                </a>
         
         </div>
         </section>
@@ -114,7 +150,7 @@
             fishing, swimming in the springs, or relaxing with family and friends.
         </p>
 
-        <a href="#contact" class="button">
+        <a href="#" class="button" onclick="showBookingMessage()">
             Reserve a Pontoon
         </a>
 
@@ -196,12 +232,19 @@
 
         <!-- Email address -->
         <p>✉ info@macraes.com</p>
-
+        
         <!-- Clicking this button opens the phone dialer on mobile devices -->
         <a href="tel:3526282602" class="contact-button">
             Call Now
         </a>
 
+        <!-- link to facebook -->
+        <a href="https://www.facebook.com/share/18axdhbkUP/?mibextid=wwXIfr"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="contact-button">
+         Visit us on Facebook
+     </a>
     </div>
 
 </section>

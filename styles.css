@@ -131,6 +131,57 @@ body {
 }
 
 /* =========================
+BOOKING COMING SOON POPUP
+========================= */
+
+.booking-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.booking-popup.active {
+    display: flex;
+}
+
+.booking-card {
+    position: relative;
+    max-width: 500px;
+    background: white;
+    color: #111;
+    padding: 40px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,.35);
+}
+
+.booking-card h2 {
+    color: #0b3d3f;
+    margin-bottom: 20px;
+}
+
+.booking-card p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.booking-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    border: none;
+    background: none;
+    font-size: 34px;
+    cursor: pointer;
+}
+
+/* =========================
    ROOMS SECTION
    Full-width image section for lodging.
    ========================= */
@@ -574,6 +625,26 @@ Used by both desktop and mobile
 
    .mobile-menu-html {
     display: none;
+}
+
+/* =========================
+MOBILE MENU PDF BUTTON
+========================= */
+
+.menu-download {
+
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.menu-download .button {
+
+    display: inline-block;
+
+    padding: 16px 32px;
+
+    font-size: 18px;
 }
 /* =========================
    MOBILE MENU CATEGORY CARD
