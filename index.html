@@ -11,41 +11,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<!-- =========================
-BOOKING COMING SOON POPUP
-========================= -->
-
-<div id="booking-popup" class="booking-popup">
-
-    <div class="booking-card">
-
-        <button class="booking-close" onclick="hideBookingMessage()">
-            ×
-        </button>
-
-        <h2>Online Booking Coming Soon</h2>
-
-        <p>
-            For now, please contact us by phone for future reservations.
-        </p>
-
-        <a href="tel:3526282602" class="button">
-            Call Now
-        </a>
-
-    </div>
-
-</div>
-
-<script>
-    function showBookingMessage() {
-        document.getElementById("booking-popup").classList.add("active");
-    }
-
-    function hideBookingMessage() {
-        document.getElementById("booking-popup").classList.remove("active");
-    }
-</script>
 <body>
 
 <!-- ========================= TOP NAVIGATION BAR ========================= -->
@@ -269,12 +234,55 @@ BOOKING COMING SOON POPUP
 </footer>
 
 <!-- =========================
-MOBILE MENU JAVASCRIPT
+BOOKING COMING SOON POPUP
 ========================= -->
+
+<div id="booking-popup"
+     class="booking-popup"
+     onclick="hideBookingMessage()">
+
+    <div class="booking-card"
+         onclick="event.stopPropagation()">
+
+        <button class="booking-close"
+                onclick="hideBookingMessage()">
+            ×
+        </button>
+
+        <h2>Online reservations are coming soon!</h2>
+
+        <p>
+            In the meantime, please call us to reserve your room
+            or pontoon rental. We look forward to seeing you at
+            MacRae's of Homosassa!
+        </p>
+
+        <a href="tel:3526282602" class="button">
+            Call Now
+        </a>
+
+    </div>
+
+</div>
+
+<!-- =========================
+PAGE JAVASCRIPT
+========================= -->
+
 <script>
+
+    function showBookingMessage() {
+        document.getElementById("booking-popup").classList.add("active");
+    }
+
+    function hideBookingMessage() {
+        document.getElementById("booking-popup").classList.remove("active");
+    }
+
     function toggleMenu() {
         document.getElementById("mobile-menu").classList.toggle("active");
     }
+
 </script>
 
 </body>

@@ -11,6 +11,12 @@
 
 ---
 
+## Version 1.1 HOTFIX
+- Fix Button placement of future reservations 
+- changed verbage to " contact for reservations and not future reservations 
+
+---
+
 ## Version 1.1
 - Facebook link
 - Photo gallery
@@ -19,6 +25,7 @@
 - FAQ page
 - Make hamburger follow user anywhere on page
 - communitiy / guides association 
+- Seperate scripts.js file for future automation
 
 ---
 

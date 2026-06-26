@@ -3,7 +3,7 @@
 ## Hosting
 - Domain: macraesofhomosassa.com
 - Hosted on GitHub Pages
--proper email domain
+- proper email domain
 
 ## Google Apps Script
 - Connected to Google Calendar
