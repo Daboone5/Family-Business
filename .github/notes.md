@@ -13,3 +13,10 @@
 - Stripe
 - Booking calendar
 - Weather
+
+## SEO additions 
+- Homosassa River 
+- Nature coast attaction 
+- River Tours 
+- manatee tours
+- 

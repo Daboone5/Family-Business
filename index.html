@@ -335,7 +335,7 @@ WEATHER SECTION
         <p>✉ macraesofhomosassa@yahoo.com</p>
         
         <!-- Clicking this button opens the phone dialer on mobile devices -->
-        <a href="tel:3526282602" class="contact-button">
+        <a href="#" class="button" onclick="callNow(); return false;">
             Call Now
         </a>
 
@@ -395,7 +395,7 @@ BOOKING COMING SOON POPUP
             MacRae's of Homosassa!
         </p>
 
-        <a href="tel:3526282602" class="button">
+        <a href="#" class="button" onclick="callNow(); return false;">
             Call Now
         </a>
 
@@ -409,21 +409,60 @@ PAGE JAVASCRIPT
 
 <script>
 
-    /* =========================
-       WEBSITE FUNCTIONS
-    ========================= */
+   /* =========================
+   WEBSITE FUNCTIONS
+========================= */
 
-    function showBookingMessage() {
-        document.getElementById("booking-popup").classList.add("active");
-    }
+// Opens the booking/reservation popup.
+function showBookingMessage() {
+    document.getElementById("booking-popup").classList.add("active");
+}
 
-    function hideBookingMessage() {
-        document.getElementById("booking-popup").classList.remove("active");
-    }
+// Closes the booking/reservation popup.
+function hideBookingMessage() {
+    document.getElementById("booking-popup").classList.remove("active");
+}
 
-    function toggleMenu() {
-        document.getElementById("mobile-menu").classList.toggle("active");
+// Opens and closes the mobile navigation menu.
+function toggleMenu() {
+    document.getElementById("mobile-menu").classList.toggle("active");
+}
+
+// Handles the "Call Now" button inside the booking popup.
+// On phones/tablets, it opens the phone dialer.
+// On desktop, it closes the popup, scrolls to the contact card,
+// and briefly highlights the contact information.
+function callNow() {
+
+    const isTouchDevice =
+        ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0);
+
+    if (isTouchDevice) {
+
+        window.location.href = "tel:+13526282602";
+
+    } else {
+
+        hideBookingMessage();
+
+        const contact = document.getElementById("contact");
+
+        contact.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        setTimeout(() => {
+            document.querySelector(".contact-card").classList.add("contact-highlight");
+
+            setTimeout(() => {
+                document.querySelector(".contact-card").classList.remove("contact-highlight");
+            }, 1200);
+
+        }, 700);
     }
+}
 
 
 /* =========================
@@ -460,6 +499,38 @@ function getBoatingOutlook(windSpeed, rainChance) {
     if (windSpeed >= 20 || rainChance >= 70) return "Use Caution";
     if (windSpeed >= 12 || rainChance >= 40) return "Fair";
     return "Good";
+}
+
+function getRiverSummary(currentLabel, boatingOutlook, windSpeed, rainChance) {
+    if (currentLabel === "Thunderstorms" || rainChance >= 70) {
+        return "Thunderstorms or heavy rain are possible today. Boaters should monitor conditions closely before heading out on the river.";
+    }
+
+    if (currentLabel === "Rain" || rainChance >= 50) {
+        return "Showers are possible today. Outdoor plans may still be enjoyable, but keep an eye on the forecast.";
+    }
+
+    if (windSpeed >= 20) {
+        return "Windy conditions are expected today. Smaller boats should use caution on the river.";
+    }
+
+    if (windSpeed >= 12) {
+        return "Breezy conditions today. Boating can still be enjoyable, but expect a little chop on open water.";
+    }
+
+    if (boatingOutlook === "Good" && rainChance < 30) {
+        return "Great conditions for enjoying the Homosassa River, pontoon rentals, and waterfront dining.";
+    }
+
+    if (currentLabel === "Partly Cloudy") {
+        return "A comfortable mix of sun and clouds today. Good weather for relaxing by the water.";
+    }
+
+    if (currentLabel === "Clear") {
+        return "Sunny skies make it a great day to enjoy MacRae's and the Homosassa River.";
+    }
+
+    return "Check current conditions before heading out, and enjoy your time on the Homosassa River.";
 }
 
 function formatTime(timeString) {
@@ -601,6 +672,13 @@ async function loadWeather() {
         const windDirection = getWindDirection(current.wind_direction_10m);
         const boatingOutlook = getBoatingOutlook(current.wind_speed_10m, rainChance);
 
+        const riverSummary = getRiverSummary(
+            currentLabel,
+            boatingOutlook,
+            current.wind_speed_10m,
+            rainChance
+        );
+
         const forecastDays = daily.time.slice(0, 7).map((date, index) => {
             const dayName = new Date(date + "T00:00:00").toLocaleDateString("en-US", {
                 weekday: "short"
@@ -627,6 +705,7 @@ async function loadWeather() {
                     <div class="weather-icon">${currentIcon}</div>
                     <h3>${Math.round(current.temperature_2m)}°F</h3>
                     <p>${currentLabel}</p>
+                    <p class="river-summary">${riverSummary}</p>
                     <p>Feels like ${Math.round(current.apparent_temperature)}°F</p>
                 </div>
 

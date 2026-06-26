@@ -387,6 +387,14 @@ CUSTOM WEATHER SECTION
     margin: 8px 0;
 }
 
+.river-summary {
+    max-width: 360px;
+    margin: 14px auto;
+    font-size: 16px;
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
 /* =========================
 7-DAY FORECAST
 ========================= */
@@ -522,6 +530,27 @@ CUSTOM WEATHER SECTION
 
 .contact-button:hover {
     opacity: .9;
+}
+.contact-highlight {
+    animation: contactPulse 1.2s ease;
+}
+
+@keyframes contactPulse {
+
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(244,162,97,0);
+    }
+
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(244,162,97,.7);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 5px 20px rgba(0,0,0,.1);
+    }
 }
 
 /* =========================
