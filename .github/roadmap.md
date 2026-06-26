@@ -34,3 +34,4 @@
 - Fishing reports
 - Merchandise
 - Gift cards
+- Name the SHED
