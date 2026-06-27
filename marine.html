@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,24 +26,22 @@
 <body>
 
     <!-- =========================
-    MARINE HERO SECTION
+    MARINE PAGE HEADER
     ========================= -->
 
-    <section class="marine-hero">
+    <section class="marine-page-header">
 
-        <div class="marine-hero-content">
+        <h1>Marine Forecast & River Conditions</h1>
 
-            <h1>Marine Forecast</h1>
+        <p>
+            Forecast for the mouth of the Homosassa River.
+        </p>
 
-            <p>
-                River conditions, boating outlook, tides, radar, and weather information
-                for the mouth of the Homosassa River.
-            </p>
-
-            <a href="#marine-dashboard" class="button">
-                View River Conditions
-            </a>
-
+        <div class="marine-page-tags">
+            <span>Current Conditions</span>
+            <span>Tides</span>
+            <span>Radar</span>
+            <span>Boating Outlook</span>
         </div>
 
     </section>
@@ -61,53 +58,9 @@
             TODAY'S RIVER CONDITIONS
             ========================= -->
 
-            <div class="marine-card marine-summary-card">
+            <div class="marine-card marine-summary-card" id="marine-summary-card">
 
-                <h2>Today's River Conditions</h2>
-
-                <p class="marine-card-intro">
-                    A quick planning summary for boating, pontoon rentals, fishing,
-                    and waterfront dining at MacRae's.
-                </p>
-
-                <div class="marine-status">
-                    Good Day on the River
-                </div>
-
-                <p>
-                    Current marine details will be expanded here using live forecast data.
-                    This section will eventually summarize wind, rain chances, tides,
-                    radar, and boating comfort in one easy-to-read report.
-                </p>
-
-            </div>
-
-            <!-- =========================
-            CURRENT MARINE OUTLOOK
-            ========================= -->
-
-            <div class="marine-card">
-
-                <h2>Current Marine Outlook</h2>
-
-                <div class="marine-grid">
-
-                    <div class="marine-info-box">
-                        <h3>Wind</h3>
-                        <p>Live wind data coming soon.</p>
-                    </div>
-
-                    <div class="marine-info-box">
-                        <h3>Rain Chance</h3>
-                        <p>Forecast precipitation details coming soon.</p>
-                    </div>
-
-                    <div class="marine-info-box">
-                        <h3>Boating Outlook</h3>
-                        <p>River boating guidance coming soon.</p>
-                    </div>
-
-                </div>
+                <p>Loading today's river conditions...</p>
 
             </div>
 
@@ -119,10 +72,14 @@
 
                 <h2>7-Day River Forecast</h2>
 
-                <p>
-                    A river-focused forecast summary will be added here using the same
-                    custom forecast logic developed for the homepage weather system.
+                <p class="marine-card-intro">
+                    A day-by-day planning forecast for the Homosassa River, organized by
+                    morning, afternoon, and evening conditions.
                 </p>
+
+                <div id="marine-forecast-grid" class="marine-forecast-grid">
+                    <p>Loading 7-day river forecast...</p>
+                </div>
 
             </div>
 
@@ -130,17 +87,19 @@
             TIDE PREDICTIONS
             ========================= -->
 
-            <div class="marine-card">
+            <div class="marine-card tide-card">
 
                 <h2>Tide Predictions</h2>
 
-                <p>
-                    NOAA tide chart integration coming soon. This section will eventually
-                    show upcoming high tides, low tides, and daily tide trends for the
-                    Homosassa River area.
+                <p class="marine-card-intro">
+                    Tide chart for Tuckers Island, Homosassa River.
                 </p>
 
-            </div>
+                <div id="tide-chart" class="tide-chart">
+                    Loading tide chart...
+                </div>
+
+            </div>  
 
             <!-- =========================
             LIVE RADAR
@@ -210,7 +169,754 @@
 
     </main>
 
+    <!-- =========================
+    MARINE PAGE JAVASCRIPT
+    ========================= -->
+
+    <script>
+        /* =========================
+           WEATHER UTILITIES
+        ========================= */
+    
+        function getWindDirection(degrees) {
+            const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+            return directions[Math.round(degrees / 45) % 8];
+        }
+    
+        function getBoatingOutlook(windSpeed, rainChance) {
+            if (windSpeed >= 20 || rainChance >= 70) return "Use Caution";
+            if (windSpeed >= 12 || rainChance >= 40) return "Fair";
+            return "Good";
+        }
+    
+        function formatHour(hour) {
+            const suffix = hour >= 12 ? "PM" : "AM";
+            const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+            return `${displayHour} ${suffix}`;
+        }
+    
+        /* =========================
+           DAILY WEATHER SUMMARY
+        ========================= */
+    
+        function getDailySummary(date, hourly) {
+            const dayHours = hourly.time
+                .map((time, index) => ({
+                    time,
+                    code: hourly.weather_code[index]
+                }))
+                .filter(hour => hour.time.startsWith(date));
+    
+            const counts = {
+                clear: 0,
+                cloudy: 0,
+                rain: 0,
+                storm: 0,
+                fog: 0
+            };
+    
+            const rainOrStormHours = [];
+    
+            dayHours.forEach(hour => {
+                const code = hour.code;
+                const hourNumber = new Date(hour.time).getHours();
+    
+                if (code === 0) {
+                    counts.clear++;
+                } else if ([1, 2, 3].includes(code)) {
+                    counts.cloudy++;
+                } else if ([45, 48].includes(code)) {
+                    counts.fog++;
+                } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
+                    counts.rain++;
+                    rainOrStormHours.push(hourNumber);
+                } else if ([95, 96, 99].includes(code)) {
+                    counts.storm++;
+                    rainOrStormHours.push(hourNumber);
+                }
+            });
+    
+            let timingNote = "";
+    
+            if (rainOrStormHours.length > 0) {
+                const earliest = Math.min(...rainOrStormHours);
+                const latest = Math.max(...rainOrStormHours);
+    
+                const hasMorning = rainOrStormHours.some(hour => hour >= 5 && hour < 12);
+                const hasAfternoon = rainOrStormHours.some(hour => hour >= 12 && hour < 18);
+                const hasEvening = rainOrStormHours.some(hour => hour >= 18 && hour < 24);
+    
+                if (rainOrStormHours.length >= 8) {
+                    timingNote = "scattered throughout the day";
+                } else if (hasMorning && hasAfternoon && hasEvening) {
+                    timingNote = "possible throughout the day";
+                } else if (hasMorning && hasAfternoon) {
+                    timingNote = "morning into afternoon";
+                } else if (hasAfternoon && hasEvening) {
+                    timingNote = "afternoon into evening";
+                } else if (hasMorning) {
+                    timingNote = "mainly morning";
+                } else if (hasAfternoon) {
+                    timingNote = "mainly afternoon";
+                } else if (hasEvening) {
+                    timingNote = "mainly evening";
+                } else {
+                    timingNote = `${formatHour(earliest)}–${formatHour(latest)}`;
+                }
+            }
+    
+            let summary;
+    
+            if (counts.storm >= 3) {
+                summary = { icon: "⛈️", label: "Storms Likely" };
+            } else if (counts.rain >= 4) {
+                summary = { icon: "🌧️", label: "Rain Likely" };
+            } else if (counts.storm > 0) {
+                summary = { icon: "🌦️", label: "Storms Possible" };
+            } else if (counts.rain > 0) {
+                summary = { icon: "🌦️", label: "Showers Possible" };
+            } else if (counts.cloudy > counts.clear) {
+                summary = { icon: "☁️", label: "Mostly Cloudy" };
+            } else if (counts.cloudy > 0) {
+                summary = { icon: "🌤️", label: "Partly Cloudy" };
+            } else {
+                summary = { icon: "☀️", label: "Sunny" };
+            }
+    
+            summary.note = timingNote;
+            return summary;
+        }
+    
+        function summarizePeriod(date, hourly, startHour, endHour) {
+            const periodHours = hourly.time
+                .map((time, index) => ({
+                    time,
+                    code: hourly.weather_code[index],
+                    rainChance: hourly.precipitation_probability[index]
+                }))
+                .filter(hour => {
+                    const hourDate = hour.time.split("T")[0];
+                    const hourNumber = new Date(hour.time).getHours();
+    
+                    return (
+                        hourDate === date &&
+                        hourNumber >= startHour &&
+                        hourNumber < endHour
+                    );
+                });
+    
+            if (periodHours.length === 0) {
+                return {
+                    icon: "—",
+                    label: "Unavailable",
+                    rainChance: "N/A"
+                };
+            }
+    
+            const counts = {
+                clear: 0,
+                cloudy: 0,
+                rain: 0,
+                storm: 0,
+                fog: 0
+            };
+    
+            periodHours.forEach(hour => {
+                const code = hour.code;
+    
+                if (code === 0) {
+                    counts.clear++;
+                } else if ([1, 2, 3].includes(code)) {
+                    counts.cloudy++;
+                } else if ([45, 48].includes(code)) {
+                    counts.fog++;
+                } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
+                    counts.rain++;
+                } else if ([95, 96, 99].includes(code)) {
+                    counts.storm++;
+                }
+            });
+    
+            let summary;
+    
+            if (counts.storm > 0) {
+                summary = { icon: "⛈️", label: "Storms Possible" };
+            } else if (counts.rain > 0) {
+                summary = { icon: "🌦️", label: "Showers Possible" };
+            } else if (counts.cloudy > counts.clear) {
+                summary = { icon: "☁️", label: "Mostly Cloudy" };
+            } else if (counts.cloudy > 0) {
+                summary = { icon: "🌤️", label: "Partly Cloudy" };
+            } else {
+                summary = { icon: "☀️", label: "Sunny" };
+            }
+    
+            summary.rainChance = Math.max(...periodHours.map(hour => hour.rainChance ?? 0));
+    
+            return summary;
+        }
+    
+        /* =========================
+           MARINE FORECAST CARDS
+        ========================= */
+    
+        function buildMarineForecastCards(daily, hourly) {
+            return daily.time.slice(0, 7).map((date, index) => {
+                const dayName = new Date(date + "T00:00:00").toLocaleDateString(
+                    "en-US",
+                    {
+                        weekday: "long"
+                    }
+                );
+    
+                const displayDate = new Date(date + "T00:00:00").toLocaleDateString(
+                    "en-US",
+                    {
+                        month: "short",
+                        day: "numeric"
+                    }
+                );
+    
+                const dailySummary = getDailySummary(date, hourly);
+    
+                const morning = summarizePeriod(date, hourly, 6, 12);
+                const afternoon = summarizePeriod(date, hourly, 12, 18);
+                const evening = summarizePeriod(date, hourly, 18, 24);
+    
+                return `
+                    <div class="marine-forecast-day">
+    
+                        <div class="marine-forecast-day-header">
+    
+                            <div class="marine-day-title">
+                                <h3>${dayName}</h3>
+    
+                                <p class="marine-forecast-date">
+                                    ${displayDate}
+                                </p>
+                            </div>
+    
+                            <span>${dailySummary.icon}</span>
+    
+                        </div>
+    
+                        <p class="marine-forecast-summary">
+                            ${dailySummary.label}${dailySummary.note ? ` — ${dailySummary.note}` : ""}
+                        </p>
+    
+                        <p class="marine-forecast-temp">
+                            High ${Math.round(daily.temperature_2m_max[index])}° /
+                            Low ${Math.round(daily.temperature_2m_min[index])}°
+                        </p>
+    
+                        <div class="marine-day-periods">
+    
+                            <div>
+                                <strong>Morning</strong>
+                                <span>${morning.icon} ${morning.label}</span>
+                                <small>Rain ${morning.rainChance}%</small>
+                            </div>
+    
+                            <div>
+                                <strong>Afternoon</strong>
+                                <span>${afternoon.icon} ${afternoon.label}</span>
+                                <small>Rain ${afternoon.rainChance}%</small>
+                            </div>
+    
+                            <div>
+                                <strong>Evening</strong>
+                                <span>${evening.icon} ${evening.label}</span>
+                                <small>Rain ${evening.rainChance}%</small>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                `;
+            }).join("");
+        }
+    
+        /* =========================
+           RIVER CONDITIONS ENGINE
+        ========================= */
+    
+        function getRiverScore(summary, windSpeed, rainChance) {
+            let score = 10;
+    
+            if (summary.label === "Storms Likely") score -= 4;
+            else if (summary.label === "Storms Possible") score -= 2;
+            else if (summary.label === "Rain Likely") score -= 3;
+            else if (summary.label === "Showers Possible") score -= 1;
+    
+            if (windSpeed >= 20) score -= 3;
+            else if (windSpeed >= 12) score -= 1.5;
+    
+            if (rainChance >= 70) score -= 2;
+            else if (rainChance >= 40) score -= 1;
+            else if (rainChance >= 20) score -= .5;
+    
+            return Math.max(1, Math.round(score));
+        }
+    
+        function getMarineSummary(score, summary, boatingOutlook) {
+            if (boatingOutlook === "Use Caution" || score <= 4) {
+                return "Use Caution on the River";
+            }
+    
+            if (summary.label === "Storms Likely") {
+                return "Storms May Affect River Plans";
+            }
+    
+            if (summary.label === "Rain Likely") {
+                return "Rain May Affect Outdoor Plans";
+            }
+    
+            if (score >= 8) {
+                return "Good Day on the River";
+            }
+    
+            if (score >= 6) {
+                return "Fair River Conditions";
+            }
+    
+            return "Check Conditions Before Heading Out";
+        }
+    
+        function getMarineNarrative(summary, boatingOutlook, windSpeed) {
+            if (windSpeed >= 20) {
+                return "Windy conditions are expected today. Smaller vessels should use caution on the Homosassa River.";
+            }
+    
+            if (summary.label === "Storms Likely") {
+                return `Thunderstorms are expected ${summary.note || "today"}. Visitors planning time on the river should monitor changing weather conditions.`;
+            }
+    
+            if (summary.label === "Storms Possible") {
+                return `A few thunderstorms may develop ${summary.note || "later today"}. Boating may still be possible at times, but check the radar before heading out.`;
+            }
+    
+            if (summary.label === "Rain Likely") {
+                return `Periods of rain are expected ${summary.note || "today"}. Outdoor plans may be affected, but the tiki bar and waterfront views can still be enjoyable.`;
+            }
+    
+            if (summary.label === "Showers Possible") {
+                return `Showers are possible ${summary.note || "today"}. There should still be opportunities to enjoy the Homosassa River between passing showers.`;
+            }
+    
+            if (windSpeed >= 12 || boatingOutlook === "Fair") {
+                return "Breezy conditions are expected today. Boating can still be enjoyable, but expect a little chop on open water.";
+            }
+    
+            if (summary.label === "Mostly Cloudy") {
+                return "Mostly cloudy skies today, but conditions should remain comfortable for visiting the waterfront, dining, and relaxing by the river.";
+            }
+    
+            if (summary.label === "Partly Cloudy") {
+                return "A warm mix of sun and clouds should make for a pleasant day on the Homosassa River.";
+            }
+    
+            if (summary.label === "Sunny") {
+                return "Sunny skies and light winds make today a great day for boating, fishing, and waterfront dining.";
+            }
+    
+            return "Check current conditions before heading out, and enjoy your time on the Homosassa River.";
+        }
+    
+        async function loadMarineConditions() {
+            const summaryCard = document.getElementById("marine-summary-card");
+            const forecastGrid = document.getElementById("marine-forecast-grid");
+    
+            const url =
+                "https://api.open-meteo.com/v1/forecast" +
+                "?latitude=28.7716" +
+                "&longitude=-82.6957" +
+                "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m" +
+                "&hourly=precipitation_probability,uv_index,weather_code" +
+                "&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset" +
+                "&temperature_unit=fahrenheit" +
+                "&wind_speed_unit=mph" +
+                "&timezone=America%2FNew_York";
+    
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+    
+                const current = data.current;
+                const hourly = data.hourly;
+                const daily = data.daily;
+    
+                const todaySummary = getDailySummary(daily.time[0], hourly);
+    
+                const windSpeed = Math.round(current.wind_speed_10m);
+                const windDirection = getWindDirection(current.wind_direction_10m);
+                const rainChance = daily.precipitation_probability_max[0];
+                const highTemp = Math.round(daily.temperature_2m_max[0]);
+                const lowTemp = Math.round(daily.temperature_2m_min[0]);
+    
+                const boatingOutlook = getBoatingOutlook(windSpeed, rainChance);
+                const riverScore = getRiverScore(todaySummary, windSpeed, rainChance);
+                const marineSummary = getMarineSummary(riverScore, todaySummary, boatingOutlook);
+                const marineNarrative = getMarineNarrative(
+                    todaySummary,
+                    boatingOutlook,
+                    windSpeed
+                );
+    
+                summaryCard.innerHTML = `
+                    <div class="marine-summary-header">
+    
+                        <div>
+                            <p class="marine-label">Today's Outlook</p>
+                            <h2>${marineSummary}</h2>
+                        </div>
+    
+                        <div class="marine-score">
+                            ${riverScore}/10
+                        </div>
+    
+                    </div>
+    
+                    <p class="marine-card-intro">
+                        ${marineNarrative}
+                    </p>
+    
+                    <div class="marine-condition-list">
+    
+                        <span>${todaySummary.icon} ${todaySummary.label}${todaySummary.note ? ` — ${todaySummary.note}` : ""}</span>
+                        <span>🌡️ High ${highTemp}° / Low ${lowTemp}°</span>
+                        <span>🌬️ Wind ${windDirection} ${windSpeed} mph</span>
+                        <span>🌧️ Rain Chance ${rainChance}%</span>
+                        <span>🚤 Boating Outlook: ${boatingOutlook}</span>
+    
+                    </div>
+    
+                    <p class="marine-summary-note">
+                        This report summarizes the full day using hourly forecast data,
+                        so a brief shower or storm does not define the entire forecast.
+                    </p>
+                `;
+    
+                if (forecastGrid) {
+                    forecastGrid.innerHTML = buildMarineForecastCards(daily, hourly);
+                }
+    
+            } catch (error) {
+                summaryCard.innerHTML = `
+                    <h2>River Conditions Temporarily Unavailable</h2>
+                    <p>
+                        Live marine forecast information could not be loaded right now.
+                        Please check again shortly.
+                    </p>
+                `;
+            }
+        }
+    
+        /* =========================
+   NOAA TIDE CHART
+========================= */
+
+async function loadTideChart() {
+    const tideChart = document.getElementById("tide-chart");
+
+    if (!tideChart) return;
+
+    const station = "8727277";
+
+    const today = new Date();
+
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    const formatDate = date => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+
+        return `${year}${month}${day}`;
+    };
+
+    const baseUrl =
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter" +
+        "?product=predictions" +
+        "&application=MacRaesWebsite" +
+        `&begin_date=${formatDate(today)}` +
+        `&end_date=${formatDate(tomorrow)}` +
+        "&datum=MLLW" +
+        `&station=${station}` +
+        "&time_zone=lst_ldt" +
+        "&units=english" +
+        "&format=json";
+
+    const smoothUrl = baseUrl + "&interval=6";
+    const highLowUrl = baseUrl + "&interval=hilo";
+
+    try {
+        const [smoothResponse, highLowResponse] = await Promise.all([
+            fetch(smoothUrl),
+            fetch(highLowUrl)
+        ]);
+
+        const smoothData = await smoothResponse.json();
+        const highLowData = await highLowResponse.json();
+
+        const smoothPredictions = smoothData.predictions;
+        const highLowPredictions = highLowData.predictions;
+
+        if (!smoothPredictions || smoothPredictions.length === 0) {
+            tideChart.innerHTML = "<p>Tide information is temporarily unavailable.</p>";
+            return;
+        }
+
+        tideChart.innerHTML = buildTideSvg(smoothPredictions, highLowPredictions);
+
+    } catch (error) {
+        tideChart.innerHTML = `
+            <p>
+                Unable to load NOAA tide predictions.
+            </p>
+        `;
+    }
+}
+
+function buildTideSvg(predictions, highLowPredictions = []) {
+        const width = 1100;
+        const height = 520;
+        const padding = 40;
+
+        const values = predictions.map(item => Number(item.v));
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+
+        const range = max - min;
+        const displayMin = min - range * 0.05;
+        const displayMax = max + range * 0.05;
+
+        const yScale = value =>
+            height -
+            padding -
+            ((value - displayMin) / (displayMax - displayMin || 1)) *
+            (height - padding * 2);
+
+    const points = predictions.map((item, index) => {
+        const x = padding + (index / (predictions.length - 1)) * (width - padding * 2);
+        const y = yScale(Number(item.v));
+
+        return {
+            x,
+            y,
+            value: Number(item.v),
+            ...item
+        };
+    });
+
+    const smoothPath = points.map((point, index) => {
+        if (index === 0) {
+            return `M ${point.x},${point.y}`;
+        }
+
+        const previous = points[index - 1];
+
+        const controlX1 = previous.x + (point.x - previous.x) / 2;
+        const controlY1 = previous.y;
+
+        const controlX2 = previous.x + (point.x - previous.x) / 2;
+        const controlY2 = point.y;
+
+        return `C ${controlX1},${controlY1} ${controlX2},${controlY2} ${point.x},${point.y}`;
+    }).join(" ");
+
+    const fillPath =
+        `${smoothPath} ` +
+        `L ${points[points.length - 1].x},${height - padding} ` +
+        `L ${points[0].x},${height - padding} Z`;
+
+    const gridCount = 4;
+
+    const gridLines = Array.from({ length: gridCount + 1 }, (_, index) => {
+        const value = min + ((max - min) / gridCount) * index;
+        const y = yScale(value);
+
+        return `
+            <line
+                x1="${padding}"
+                y1="${y}"
+                x2="${width - padding}"
+                y2="${y}"
+                stroke="rgba(255,255,255,.16)"
+                stroke-width="1">
+            </line>
+
+            <text
+                x="${padding - 10}"
+                y="${y + 4}"
+                text-anchor="end"
+                font-size="12"
+                fill="rgba(255,255,255,.7)">
+                ${value.toFixed(1)} ft
+            </text>
+        `;
+    }).join("");
+
+    const timeLabels = Array.from({ length: 9 }, (_, index) => {
+    const firstTime = new Date(points[0].t).getTime();
+    const lastTime = new Date(points[points.length - 1].t).getTime();
+
+    const labelTime = firstTime + ((lastTime - firstTime) / 8) * index;
+
+    const x =
+        padding +
+        (index / 8) *
+        (width - padding * 2);
+
+    const label = new Date(labelTime).toLocaleTimeString("en-US", {
+        hour: "numeric"
+    });
+
+    return `
+        <line
+            x1="${x}"
+            y1="${padding}"
+            x2="${x}"
+            y2="${height - padding}"
+            stroke="rgba(255,255,255,.10)"
+            stroke-width="1">
+        </line>
+
+        <text
+            x="${x}"
+            y="${height - 12}"
+            text-anchor="middle"
+            font-size="12"
+            fill="rgba(255,255,255,.72)">
+            ${label}
+        </text>
+    `;
+}).join("");
+
+    const labelPoints = highLowPredictions.map(item => {
+        const itemTime = new Date(item.t).getTime();
+
+        const closestPoint = points.reduce((closest, point) => {
+            const pointTime = new Date(point.t).getTime();
+
+            const currentDifference = Math.abs(pointTime - itemTime);
+            const closestDifference = Math.abs(new Date(closest.t).getTime() - itemTime);
+
+            return currentDifference < closestDifference ? point : closest;
+        }, points[0]);
+
+        return {
+            ...closestPoint,
+            type: item.type,
+            labelTime: item.t
+        };
+    });
+
+    const labels = labelPoints.map(point => {
+        const time = new Date(point.labelTime).toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit"
+        });
+
+        const type = point.type === "H" ? "High" : "Low";
+
+        const labelY = point.type === "H"
+            ? point.y - 45
+            : point.y + 45;
+
+        const timeY = point.type === "H"
+            ? point.y - 27
+            : point.y + 27;
+
+        return `
+            <text
+                x="${point.x}"
+                y="${labelY}"
+                text-anchor="middle"
+                font-size="13"
+                fill="white">
+                ${type} Tide
+            </text>
+
+            <text
+                x="${point.x}"
+                y="${timeY}"
+                text-anchor="middle"
+                font-size="12"
+                fill="rgba(255,255,255,.75)">
+                ${time}
+            </text>
+
+            <circle cx="${point.x}" cy="${point.y}" r="7" fill="#F4A261"></circle>
+            <circle cx="${point.x}" cy="${point.y}" r="13" fill="none" stroke="rgba(244,162,97,.35)" stroke-width="2"></circle>
+        `;
+    }).join("");
+
+    return `
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Tide chart for Tuckers Island Homosassa River">
+
+            <defs>
+                <linearGradient id="tideFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#8DE3FF" stop-opacity=".7" />
+                    <stop offset="100%" stop-color="#17324D" stop-opacity=".25" />
+                </linearGradient>
+
+                <filter id="tideGlow">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+            </defs>
+
+            ${gridLines}
+
+            ${timeLabels}
+
+            <line
+                x1="${padding}"
+                y1="${height - padding}"
+                x2="${width - padding}"
+                y2="${height - padding}"
+                stroke="rgba(255,255,255,.35)">
+            </line>
+
+            <line
+                x1="${padding}"
+                y1="${padding}"
+                x2="${padding}"
+                y2="${height - padding}"
+                stroke="rgba(255,255,255,.35)">
+            </line>
+
+            <path d="${fillPath}" fill="url(#tideFill)"></path>
+
+            <path
+                d="${smoothPath}"
+                fill="none"
+                stroke="#8DE3FF"
+                stroke-width="5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                filter="url(#tideGlow)">
+            </path>
+
+            ${labels}
+
+        </svg>
+    `;
+}
+
+    
+        /* =========================
+           INITIALIZE PAGE
+        ========================= */
+    
+        loadMarineConditions();
+        loadTideChart();
+    </script>
+
 </body>
 
 </html>
-```

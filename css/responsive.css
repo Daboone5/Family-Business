@@ -17,9 +17,12 @@
    Applies to phones and small tablets.
    ========================= */
 
-@media (max-width: 768px) {
+   @media (max-width: 768px) {
 
-    /* Navigation */
+    /* =========================
+       NAVIGATION
+       ========================= */
+
     .navbar {
         padding: 10px 20px;
         align-items: flex-start;
@@ -46,7 +49,10 @@
         z-index: 1000;
     }
 
-    /* Homepage image sections */
+    /* =========================
+       HOMEPAGE
+       ========================= */
+
     .hero,
     .rooms-section,
     .rentals-section,
@@ -74,7 +80,10 @@
         font-size: 18px;
     }
 
-    /* Weather */
+    /* =========================
+       WEATHER
+       ========================= */
+
     .weather-main {
         flex-direction: column;
         text-align: center;
@@ -84,12 +93,18 @@
         font-size: 52px;
     }
 
-    /* Map */
+    /* =========================
+       MAP
+       ========================= */
+
     .map-section h2 {
         font-size: 30px;
     }
 
-    /* Contact */
+    /* =========================
+       CONTACT
+       ========================= */
+
     .contact-section h2 {
         font-size: 30px;
     }
@@ -98,7 +113,10 @@
         padding: 30px 20px;
     }
 
-    /* Live music */
+    /* =========================
+       LIVE MUSIC
+       ========================= */
+
     .music-header h1 {
         font-size: 40px;
     }
@@ -115,7 +133,10 @@
         width: 100%;
     }
 
-    /* Menu page */
+    /* =========================
+       MENU PAGE
+       ========================= */
+
     .desktop-menu-image {
         display: none;
     }
@@ -140,18 +161,28 @@
         font-size: 16px;
     }
 
-    /* Marine page */
-    .marine-hero {
-        min-height: 55vh;
-        padding: 120px 6% 70px;
+    /* =========================
+       MARINE PAGE
+       ========================= */
+
+    .marine-page-header {
+        padding: 70px 6% 45px;
     }
 
-    .marine-hero h1 {
-        font-size: 42px;
+    .marine-page-header h1 {
+        font-size: 38px;
     }
 
-    .marine-hero p {
+    .marine-page-header p {
         font-size: 18px;
+    }
+
+    .marine-page-tags {
+        gap: 8px;
+    }
+
+    .marine-page-tags span {
+        font-size: 13px;
     }
 
     .marine-background {
@@ -169,6 +200,34 @@
 
     .marine-card p {
         font-size: 16px;
+    }
+
+    /* =========================
+       TODAY'S RIVER CONDITIONS
+       ========================= */
+
+    .marine-summary-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .marine-score {
+        width: 72px;
+        height: 72px;
+
+        font-size: 20px;
+    }
+
+    .marine-condition-list {
+        flex-direction: column;
+    }
+
+    /* =========================
+       MARINE 7-DAY FORECAST
+       ========================= */
+
+    .marine-day-periods {
+        grid-template-columns: 1fr;
     }
 
 }
