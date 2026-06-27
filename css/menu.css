@@ -1,0 +1,137 @@
+/* =========================
+   MENU PAGE HEADER
+   Top section of menu page.
+   ========================= */
+
+   .menu-header {
+    background: #17102f;
+    color: white;
+
+    text-align: center;
+
+    padding: 80px 20px;
+}
+
+.menu-header h1 {
+    font-size: 56px;
+    margin-bottom: 15px;
+}
+
+.menu-header p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+/* =========================
+   MENU BACKGROUND
+   Used by both desktop and mobile.
+   ========================= */
+
+.menu-background {
+    background:
+        linear-gradient(
+            rgba(0,0,0,.25),
+            rgba(0,0,0,.25)
+        ),
+        url("../images/pavers.jpg");
+
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+
+    padding: 60px 0;
+}
+
+/* =========================
+   DESKTOP MENU IMAGES
+   ========================= */
+
+.desktop-menu-image {
+    display: flex;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    gap: 30px;
+
+    flex-wrap: wrap;
+
+    padding: 60px 8%;
+
+    text-align: center;
+}
+
+.desktop-menu-image img {
+    width: 100%;
+    max-width: 550px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+
+    transition: transform .3s ease;
+}
+
+.desktop-menu-image img:hover {
+    transform: scale(1.02);
+}
+
+/* =========================
+   MOBILE HTML MENU
+   Hidden on desktop, shown on phones.
+   ========================= */
+
+.mobile-menu-html {
+    display: none;
+}
+
+/* =========================
+   MOBILE MENU CATEGORY CARD
+   ========================= */
+
+.menu-category {
+    background: rgba(255,255,255,.88);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(255,255,255,.35);
+
+    box-shadow: 0 12px 30px rgba(0,0,0,.25);
+
+    transition: all .3s ease;
+}
+
+.menu-category:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 16px 35px rgba(0,0,0,.3);
+}
+
+.menu-category h2 {
+    color: #0b3d3f;
+
+    font-size: 30px;
+
+    margin-bottom: 18px;
+
+    padding-bottom: 10px;
+
+    border-bottom: 2px solid #c89b3c;
+}
+
+.menu-category p {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin: 10px 0;
+
+    font-size: 17px;
+    line-height: 1.4;
+}

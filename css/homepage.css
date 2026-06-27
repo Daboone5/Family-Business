@@ -1,0 +1,221 @@
+/* =========================
+   HERO SECTION
+   Main full-screen landing section.
+   ========================= */
+
+   .hero {
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(rgba(8,18,35,.55), rgba(8,18,35,.55)),
+        url("../images/waterfront.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 0 4% 90px;
+
+    color: white;
+
+}
+
+.hero-content {
+
+    max-width: 950px;
+
+    padding-bottom: 120px;
+
+}
+
+.hero h2 {
+
+    font-size: 64px;
+
+    line-height: 1.05;
+
+    margin-bottom: 25px;
+
+}
+
+.hero p {
+
+    font-size: 22px;
+
+    max-width: 650px;
+
+}
+
+/* =========================
+   ROOMS SECTION
+   Waterfront accommodations.
+   ========================= */
+
+.rooms-section {
+
+    min-height: 80vh;
+
+    background:
+        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+        url("../images/room.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    padding: 0 4% 80px;
+
+    color: white;
+
+}
+
+.rooms-content {
+
+    max-width: 700px;
+
+}
+
+.rooms-content h2 {
+
+    font-size: 52px;
+
+    margin-bottom: 20px;
+
+}
+
+.rooms-content p {
+
+    font-size: 20px;
+
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+
+}
+
+/* =========================
+   PONTOON RENTALS SECTION
+   ========================= */
+
+.rentals-section {
+
+    min-height: 80vh;
+
+    background:
+        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+        url("../images/pontoon.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    padding: 0 4% 80px;
+
+    color: white;
+
+}
+
+.rentals-content {
+
+    max-width: 700px;
+
+}
+
+.rentals-content h2 {
+
+    font-size: 52px;
+
+    margin-bottom: 20px;
+
+}
+
+.rentals-content p {
+
+    font-size: 20px;
+
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+
+}
+
+/* =========================
+   TIKI BAR SECTION
+   ========================= */
+
+.tiki-section {
+
+    min-height: 80vh;
+
+    background:
+        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+        url("../images/tikibar.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    padding: 0 4% 80px;
+
+    color: white;
+
+}
+
+.tiki-content {
+
+    max-width: 700px;
+
+}
+
+.tiki-content h2 {
+
+    font-size: 52px;
+
+    margin-bottom: 20px;
+
+}
+
+.tiki-content p {
+
+    font-size: 20px;
+
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+
+}
+
+/* =========================
+   INFORMATION BACKGROUND
+   Shared background for the
+   Weather, Map, and Contact sections.
+   ========================= */
+
+.info-background {
+
+    background-image:
+        linear-gradient(rgba(10,8,25,.65), rgba(10,8,25,.65)),
+        url("../images/riverchart.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-attachment: fixed;
+
+}

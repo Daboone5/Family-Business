@@ -1,0 +1,70 @@
+/* =========================
+   GLOBAL RESET
+   Removes default browser spacing and makes sizing easier to control.
+   ========================= */
+
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================
+   DESIGN TOKENS
+   Central values used throughout the website.
+   ========================= */
+
+:root {
+
+    /* Colors */
+    --color-primary: #17324D;
+    --color-ocean: #0B3D3F;
+    --color-accent: #F4A261;
+    --color-dark: #17102F;
+    --color-light: #F5F5F5;
+    --color-white: #FFFFFF;
+    --color-gold: #C89B3C;
+
+    /* Shadows */
+    --shadow-card: 0 8px 25px rgba(0,0,0,.25);
+    --shadow-soft: 0 5px 20px rgba(0,0,0,.1);
+
+    /* Border Radius */
+    --radius-small: 6px;
+    --radius-medium: 12px;
+    --radius-large: 18px;
+    --radius-xl: 20px;
+
+    /* Spacing */
+    --section-padding: 80px 8%;
+    --card-padding: 35px;
+
+}
+
+/* =========================
+   SMOOTH SCROLLING
+   Makes anchor links scroll smoothly instead of jumping.
+   ========================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* =========================
+   BODY
+   Sets the default font and base page styling.
+   ========================= */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* =========================
+   MEDIA DEFAULTS
+   Keeps images and embedded media responsive by default.
+   ========================= */
+
+img,
+iframe {
+    max-width: 100%;
+}

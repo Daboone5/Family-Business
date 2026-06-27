@@ -815,6 +815,88 @@ Used by both desktop and mobile
 }
 
 /* =========================
+MARINE PAGE
+========================= */
+
+.marine-header {
+    padding: 120px 8% 80px;
+    text-align: center;
+    color: white;
+    background:
+        linear-gradient(rgba(10, 8, 25, 0.65), rgba(10, 8, 25, 0.65)),
+        url("images/riverchart.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.marine-header h1 {
+    font-size: 54px;
+    margin-bottom: 20px;
+}
+
+.marine-header p {
+    font-size: 20px;
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.marine-background {
+    padding: 80px 8%;
+    background:
+        linear-gradient(rgba(10, 8, 25, 0.75), rgba(10, 8, 25, 0.75)),
+        url("images/riverchart.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.marine-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    gap: 30px;
+}
+
+.marine-card {
+    background: rgba(255, 255, 255, 0.95);
+    color: #111;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.marine-card h2 {
+    color: #0b3d3f;
+    margin-bottom: 15px;
+    font-size: 30px;
+}
+
+.marine-card p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.marine-card iframe {
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    .marine-header h1 {
+        font-size: 40px;
+    }
+
+    .marine-header p {
+        font-size: 18px;
+    }
+
+    .marine-card {
+        padding: 25px;
+    }
+}
+
+/* =========================
    MOBILE HTML MENU
    Hidden on desktop, shown on phones.
    ========================= */

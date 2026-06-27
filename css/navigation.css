@@ -1,0 +1,173 @@
+/* =========================
+   NAVIGATION BAR
+   Transparent navigation positioned over the hero image.
+   ========================= */
+
+   .navbar {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    background: transparent;
+    color: white;
+
+    padding: 10px 25px 0 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    z-index: 100;
+
+}
+
+/* =========================
+   LOGO
+   ========================= */
+
+.logo img {
+
+    height: 150px;
+    width: auto;
+
+}
+
+/* =========================
+   DESKTOP NAVIGATION
+   ========================= */
+
+.desktop-nav {
+
+    padding-top: 5px;
+
+}
+
+.navbar a {
+
+    color: white;
+
+    text-decoration: none;
+
+    margin-left: 20px;
+
+    font-weight: bold;
+
+    transition: color .25s ease;
+
+}
+
+.navbar a:hover {
+
+    color: var(--color-accent);
+
+}
+
+/* =========================
+   MOBILE MENU BUTTON
+   Hidden on desktop.
+   ========================= */
+
+.menu-toggle {
+
+    display: none;
+
+}
+
+/* =========================
+   MOBILE SLIDE-OUT MENU
+   ========================= */
+
+.mobile-menu {
+
+    position: fixed;
+
+    top: 0;
+    right: -280px;
+
+    width: 280px;
+    height: 100vh;
+
+    background: rgba(23,16,47,.15);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    border-left: 1px solid rgba(255,255,255,.2);
+
+    z-index: 999;
+
+    padding: 80px 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
+
+    overflow-y: auto;
+
+    transition: right .3s ease;
+
+}
+
+/* =========================
+   ACTIVE MOBILE MENU
+   ========================= */
+
+.mobile-menu.active {
+
+    right: 0;
+
+}
+
+/* =========================
+   MOBILE MENU LINKS
+   ========================= */
+
+.mobile-menu a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+}
+
+/* =========================
+   CLOSE BUTTON
+   ========================= */
+
+.close-menu {
+
+    position: absolute;
+
+    top: 20px;
+    right: 25px;
+
+    background: none;
+    border: none;
+
+    color: white;
+
+    font-size: 36px;
+
+    cursor: pointer;
+
+}
+
+/* =========================
+   MOBILE MENU HTML
+   Hidden on desktop.
+   ========================= */
+
+.mobile-menu-html {
+
+    display: none;
+
+}

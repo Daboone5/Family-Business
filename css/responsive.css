@@ -1,0 +1,192 @@
+/* =========================
+   TABLET RESPONSIVE STYLES
+   Applies to tablets and smaller screens.
+   ========================= */
+
+   @media (max-width: 1000px) {
+
+    /* Weather forecast grid */
+    .forecast-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+/* =========================
+   MOBILE RESPONSIVE STYLES
+   Applies to phones and small tablets.
+   ========================= */
+
+@media (max-width: 768px) {
+
+    /* Navigation */
+    .navbar {
+        padding: 10px 20px;
+        align-items: flex-start;
+    }
+
+    .logo img {
+        height: 90px;
+    }
+
+    .desktop-nav {
+        display: none !important;
+    }
+
+    .menu-toggle {
+        display: block;
+
+        background: none;
+        border: none;
+
+        color: white;
+
+        font-size: 36px;
+
+        z-index: 1000;
+    }
+
+    /* Homepage image sections */
+    .hero,
+    .rooms-section,
+    .rentals-section,
+    .tiki-section {
+        min-height: 85vh;
+        padding: 0 6% 60px;
+    }
+
+    .hero-content {
+        padding-bottom: 60px;
+    }
+
+    .hero h2,
+    .rooms-content h2,
+    .rentals-content h2,
+    .tiki-content h2 {
+        font-size: 38px;
+        line-height: 1.1;
+    }
+
+    .hero p,
+    .rooms-content p,
+    .rentals-content p,
+    .tiki-content p {
+        font-size: 18px;
+    }
+
+    /* Weather */
+    .weather-main {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .weather-main h3 {
+        font-size: 52px;
+    }
+
+    /* Map */
+    .map-section h2 {
+        font-size: 30px;
+    }
+
+    /* Contact */
+    .contact-section h2 {
+        font-size: 30px;
+    }
+
+    .contact-card {
+        padding: 30px 20px;
+    }
+
+    /* Live music */
+    .music-header h1 {
+        font-size: 40px;
+    }
+
+    .music-header p {
+        font-size: 18px;
+    }
+
+    .upcoming-music h2 {
+        font-size: 30px;
+    }
+
+    .music-card {
+        width: 100%;
+    }
+
+    /* Menu page */
+    .desktop-menu-image {
+        display: none;
+    }
+
+    .mobile-menu-html {
+        display: grid;
+
+        padding: 60px 6%;
+
+        gap: 25px;
+    }
+
+    .menu-header h1 {
+        font-size: 38px;
+    }
+
+    .menu-header p {
+        font-size: 18px;
+    }
+
+    .menu-category p {
+        font-size: 16px;
+    }
+
+    /* Marine page */
+    .marine-hero {
+        min-height: 55vh;
+        padding: 120px 6% 70px;
+    }
+
+    .marine-hero h1 {
+        font-size: 42px;
+    }
+
+    .marine-hero p {
+        font-size: 18px;
+    }
+
+    .marine-background {
+        padding: 60px 6%;
+        background-attachment: scroll;
+    }
+
+    .marine-card {
+        padding: 25px;
+    }
+
+    .marine-card h2 {
+        font-size: 28px;
+    }
+
+    .marine-card p {
+        font-size: 16px;
+    }
+
+}
+
+/* =========================
+   SMALL PHONE RESPONSIVE STYLES
+   ========================= */
+
+@media (max-width: 600px) {
+
+    /* Weather forecast grid */
+    .forecast-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Marine radar */
+    .radar-card iframe {
+        height: 350px;
+    }
+
+}

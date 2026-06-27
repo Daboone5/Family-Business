@@ -1,0 +1,234 @@
+/*==================================================
+  MacRae's of Homosassa Website
+  Marine Forecast Stylesheet
+
+  Purpose:
+  Contains all styling unique to the Marine Forecast
+  page, including the hero, dashboard, radar,
+  tides, and future marine tools.
+
+  Dependencies:
+      global.css
+      navigation.css
+      buttons.css
+
+  Last Updated:
+      June 2026
+==================================================*/
+
+/* =========================
+   MARINE HERO
+   ========================= */
+
+   .marine-hero {
+
+    min-height: 65vh;
+
+    background:
+        linear-gradient(rgba(8,18,35,.65), rgba(8,18,35,.65)),
+        url("../images/marine-hero.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 120px 8% 80px;
+
+    color: white;
+
+}
+
+.marine-hero-content {
+
+    max-width: 850px;
+
+}
+
+.marine-hero h1 {
+
+    font-size: 64px;
+
+    margin-bottom: 20px;
+
+}
+
+.marine-hero p {
+
+    font-size: 22px;
+
+    line-height: 1.6;
+
+    margin-bottom: 35px;
+
+}
+
+/* =========================
+   PAGE BACKGROUND
+   ========================= */
+
+.marine-background {
+
+    background:
+        linear-gradient(rgba(10,8,25,.75), rgba(10,8,25,.75)),
+        url("../images/riverchart.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    padding: 80px 8%;
+
+}
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+
+.marine-content {
+
+    max-width: 1200px;
+
+    margin: auto;
+
+}
+
+/* =========================
+   MARINE CARD
+   ========================= */
+
+.marine-card {
+
+    background: rgba(23,16,47,.96);
+
+    color: white;
+
+    border-radius: var(--radius-large);
+
+    padding: 35px;
+
+    margin-bottom: 35px;
+
+    box-shadow: var(--shadow-card);
+
+}
+
+.marine-card h2 {
+
+    font-size: 34px;
+
+    margin-bottom: 20px;
+
+    color: var(--color-accent);
+
+}
+
+.marine-card p {
+
+    line-height: 1.7;
+
+    font-size: 18px;
+
+}
+
+/* =========================
+   SUMMARY CARD
+   ========================= */
+
+.marine-summary-card {
+
+    border-left: 6px solid var(--color-accent);
+
+}
+
+.marine-card-intro {
+
+    margin-bottom: 25px;
+
+    opacity: .9;
+
+}
+
+.marine-status {
+
+    display: inline-block;
+
+    padding: 12px 22px;
+
+    background: var(--color-accent);
+
+    color: #111;
+
+    font-weight: bold;
+
+    border-radius: 999px;
+
+    margin-bottom: 25px;
+
+}
+
+/* =========================
+   INFORMATION GRID
+   ========================= */
+
+.marine-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+
+    gap: 25px;
+
+    margin-top: 25px;
+
+}
+
+.marine-info-box {
+
+    background: rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    border-radius: var(--radius-medium);
+
+    padding: 25px;
+
+}
+
+.marine-info-box h3 {
+
+    color: var(--color-accent);
+
+    margin-bottom: 15px;
+
+}
+
+/* =========================
+   RADAR
+   ========================= */
+
+.radar-card iframe {
+
+    margin-top: 20px;
+
+    border-radius: var(--radius-medium);
+
+    overflow: hidden;
+
+}
+
+/* =========================
+   RETURN SECTION
+   ========================= */
+
+.marine-back {
+
+    text-align: center;
+
+    margin-top: 60px;
+
+}
