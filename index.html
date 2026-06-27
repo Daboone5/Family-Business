@@ -600,7 +600,7 @@ function getDailyNarrative(summary, boatingOutlook, windSpeed, rainChance) {
     }
 
     if (summary.label === "Storms Likely") {
-        return `Scattered thunderstorms are expected ${summary.note || "today"}. Visitors planning time on the river should monitor changing weather conditions.`;
+        return `Thunderstorms are expected ${summary.note || "today"}. Visitors planning time on the river should monitor changing weather conditions.`;
     }
 
     if (summary.label === "Storms Possible") {
@@ -628,7 +628,7 @@ function getDailyNarrative(summary, boatingOutlook, windSpeed, rainChance) {
     }
 
     if (summary.label === "Sunny") {
-        return "Sunny skies and light winds make today a great day for pontoon rentals, fishing, and waterfront dining.";
+        return "Sunny skies and light winds make today a great day for boating, fishing, and waterfront dining.";
     }
 
     return "Check current conditions before heading out, and enjoy your time on the Homosassa River.";
