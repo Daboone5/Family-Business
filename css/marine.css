@@ -427,6 +427,37 @@ body {
 }
 
 /* =========================
+   CURRENT TIDE STATUS
+   ========================= */
+
+   .current-tide-status {
+    margin-bottom: 22px;
+}
+
+.tide-status-main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.tide-status-main > div {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: var(--radius-medium);
+    padding: 20px;
+}
+
+.tide-status-main h3 {
+    color: var(--color-accent);
+    font-size: 28px;
+    margin: 6px 0;
+}
+
+.tide-status-main p {
+    margin: 0;
+}
+
+/* =========================
    TIDE CHART
    ========================= */
 
@@ -462,6 +493,137 @@ body {
     height: 500px;
 
     display: block;
+}
+
+/* =========================
+   TIDE CHART POLISH
+========================= */
+
+.tide-chart-date {
+    color: #F4A261;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.tide-live-indicator {
+    align-items: center;
+    background: rgba(244, 162, 97, .18);
+    border: 1px solid rgba(244, 162, 97, .45);
+    border-radius: 999px;
+    color: #F4A261;
+    display: inline-flex;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    line-height: 1;
+    margin-right: 8px;
+    padding: 4px 8px;
+    vertical-align: middle;
+}
+
+/* =========================
+   SUNRISE / SUNSET LEGEND
+========================= */
+
+.sun-times {
+    background: rgba(23, 16, 47, .62);
+    border: 1px solid rgba(255, 255, 255, .10);
+    border-radius: 16px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .18);
+    margin-bottom: 18px;
+    padding: 16px;
+}
+
+.sun-times-header {
+    align-items: center;
+    display: flex;
+    gap: 14px;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.sun-times-header h3 {
+    color: #ffffff;
+    font-size: 1.05rem;
+    margin: 3px 0 0;
+}
+
+.sun-times-legend-swatch {
+    background: rgba(244, 162, 97, .16);
+    border: 1px solid rgba(244, 162, 97, .38);
+    border-radius: 999px;
+    box-shadow: 0 0 16px rgba(244, 162, 97, .14);
+    display: inline-block;
+    flex: 0 0 auto;
+    height: 10px;
+    margin-right: 8px;
+    vertical-align: middle;
+    width: 34px;
+}
+
+.sun-times-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sun-times-grid div {
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .09);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.sun-times-grid span {
+    color: rgba(255, 255, 255, .66);
+    display: block;
+    font-size: .78rem;
+    margin-bottom: 5px;
+}
+
+.sun-times-grid strong {
+    color: #F4A261;
+    display: block;
+    font-size: 1rem;
+}
+
+.sun-times-note {
+    align-items: center;
+    color: rgba(255, 255, 255, .64);
+    display: flex;
+    font-size: .84rem;
+    gap: 2px;
+    line-height: 1.45;
+    margin-top: 12px;
+}
+
+/* =========================
+   TIDE DATA SOURCE
+========================= */
+
+.tide-data-source {
+    color: rgba(255, 255, 255, .55);
+    font-size: .82rem;
+    line-height: 1.5;
+    margin-top: 18px;
+    text-align: left;
+}
+
+.tide-data-source a {
+    color: rgba(255, 255, 255, .72);
+    text-decoration: underline;
+    text-decoration-color: rgba(141, 227, 255, .35);
+    text-underline-offset: 3px;
+    transition: color .2s ease, text-decoration-color .2s ease;
+}
+
+.tide-data-source a:hover,
+.tide-data-source a:focus {
+    color: #8DE3FF;
+    text-decoration-color: #8DE3FF;
 }
 
 /* =========================

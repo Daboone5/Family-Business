@@ -20,3 +20,9 @@
 - River Tours 
 - manatee tours
 - 
+
+## weather forecast
+- capitalize descriptions
+- make hamburger slide down page with user 
+- embed live river camera instead of a website redirect 
+
