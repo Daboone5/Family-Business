@@ -429,43 +429,7 @@ const ICONS = {
    RIVER CONDITIONS ENGINE
 ========================= */
 
-function getRiverScore(todaySummary, windSpeed, rainChance) {
-    let score = 10;
-
-    if (todaySummary.label === "Storms Likely") {
-        score -= 4;
-    } else if (todaySummary.label === "Storms Possible") {
-        score -= 3;
-    } else if (todaySummary.label === "Rain Likely") {
-        score -= 2;
-    } else if (todaySummary.label === "Showers Possible") {
-        score -= 1;
-    } else if (todaySummary.label === "Mostly Cloudy") {
-        score -= 1;
-    }
-
-    if (todaySummary.note === "scattered throughout the day" || todaySummary.note === "possible throughout the day") {
-        score -= 1;
-    }
-
-    if (windSpeed >= 20) {
-        score -= 3;
-    } else if (windSpeed >= 15) {
-        score -= 2;
-    } else if (windSpeed >= 12) {
-        score -= 1;
-    }
-
-    if (rainChance >= 70) {
-        score -= 2;
-    } else if (rainChance >= 40) {
-        score -= 1;
-    }
-
-    return Math.max(1, Math.min(10, score));
-}
-
-function getMarineSummary(riverScore, todaySummary, boatingOutlook) {
+function getMarineSummary(todaySummary, boatingOutlook) {
     if (todaySummary.label === "Storms Likely" || todaySummary.label === "Storms Possible") {
         return "Storms May Affect River Plans";
     }
@@ -474,15 +438,11 @@ function getMarineSummary(riverScore, todaySummary, boatingOutlook) {
         return "Use Caution on the River";
     }
 
-    if (riverScore >= 8) {
-        return "Good Day for the River";
-    }
-
-    if (riverScore >= 6) {
+    if (boatingOutlook === "Fair") {
         return "Fair River Conditions";
     }
 
-    return "River Plans Need Caution";
+    return "Good Day for the River";
 }
 
 function getMarineNarrative(todaySummary, boatingOutlook, windSpeed) {
@@ -551,8 +511,7 @@ function getMarineNarrative(todaySummary, boatingOutlook, windSpeed) {
         const moonPhase = getMoonPhaseInfo(new Date());
 
         const boatingOutlook = getBoatingOutlook(windSpeed, rainChance);
-        const riverScore = getRiverScore(todaySummary, windSpeed, rainChance);
-        const marineSummary = getMarineSummary(riverScore, todaySummary, boatingOutlook);
+        const marineSummary = getMarineSummary(todaySummary, boatingOutlook);
         const marineNarrative = getMarineNarrative(
             todaySummary,
             boatingOutlook,
@@ -564,10 +523,6 @@ function getMarineNarrative(todaySummary, boatingOutlook, windSpeed) {
 
                 <div>
                     <h2>${marineSummary}</h2>
-                </div>
-
-                <div class="marine-score">
-                    ${riverScore}/10
                 </div>
 
             </div>

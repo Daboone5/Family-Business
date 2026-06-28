@@ -148,9 +148,6 @@
         <a href="#tiki">Tiki Bar</a>
         <a href="livemusic.html">Live Music</a>
         <a href="#contact">Contact</a>
-        <a href="https://www.discovercrystalriverfl.com/live-river-cam/" target="_blank">
-            Live River Camera
-        </a>
     </nav>
 
     <!-- Mobile hamburger button -->
@@ -175,9 +172,6 @@
     <a href="#tiki" onclick="toggleMenu()">Tiki Bar</a>
     <a href="livemusic.html" onclick="toggleMenu()">Live Music</a>
     <a href="#contact" onclick="toggleMenu()">Contact</a>
-    <a href="https://www.discovercrystalriverfl.com/live-river-cam/" target="_blank" onclick="toggleMenu()">
-        Live River Camera
-    </a>
 
 </div>
 
@@ -268,89 +262,133 @@
 
 </section>
 
-<!-- =========================
-INFO BACKGROUND SECTION,
-map, and contact
-========================= -->
 
-<section class="info-background">
+<div class="chart-background-section">
 
-<!-- =========================
-GOOGLE MAP SECTION
-========================= -->
+    <!-- =========================
+    INFO BACKGROUND SECTION,
+    live cam, map, and contact
+    ========================= -->
 
-<section class="map-section">
+    <section class="info-background">
 
-    <h2>Find Us</h2>
+        <!-- =========================
+        LIVE RIVER CAM
+        ========================= -->
 
-    <div class="map-container">
+        <section class="river-cam-section">
 
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4694.288237377221!2d-82.62160512359083!3d28.78486117714536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e83eef73775f59%3A0xff966b6ff0bd226e!2s5300%20S%20Cherokee%20Way%2C%20Homosassa%2C%20FL%2034448!5e1!3m2!1sen!2sus!4v1782535044758!5m2!1sen!2sus"
-            width="100%"
-            height="450"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
+            <div class="river-cam-content">
 
-    </div>
+                <h2>Homosassa Live River Cam</h2>
 
-    <div class="directions-button">
+                <p>
+                    Take a live look at the Homosassa River from MacRae's.
+                </p>
 
-        <a
-            href="https://www.google.com/maps/dir/?api=1&destination=5300+S+Cherokee+Way,+Homosassa,+FL+34448"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="button">
+                <div class="river-cam-frame" id="river-cam-frame">
 
-            Get Directions
+                    <button
+                        class="river-cam-fullscreen"
+                        type="button"
+                        onclick="openRiverCamFullscreen()"
+                        aria-label="View river cam fullscreen">
+                        ⛶
+                    </button>
+                
+                    <div id="macraes-river-cam-holder"></div>
+                
+                </div>
 
-        </a>
+            </div>
 
-    </div>
+        </section>
 
-</section>
+        <script src="https://manage.hdrelay.com/js/hdrelay.js"></script>
 
-<!-- ========================= CONTACT SECTION ========================= -->
-<section id="contact" class="contact-section">
+        <script>
+            HDRelay.create({
+                target: "macraes-river-cam-holder",
+                id: "32bb4545-b73d-4a97-abf3-15650c991337"
+            });
+        </script>
 
-    <!-- Section title -->
-    <h2>Contact Us</h2>
+        <!-- =========================
+        GOOGLE MAP SECTION
+        ========================= -->
 
-    <!-- Card containing business contact information -->
-    <div class="contact-card">
+        <section class="map-section">
 
-        <!-- Business name -->
-        <h3>MacRae's of Homosassa</h3>
+            <h2>Find Us</h2>
 
-        <!-- Physical location -->
-        <p>📍 5300 S Cherokee Way, Homosassa, FL 34448</p>
+            <div class="map-container">
 
-        <!-- Phone number -->
-        <p>📞 (352) 628-2602</p>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4694.288237377221!2d-82.62160512359083!3d28.78486117714536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88e83eef73775f59%3A0xff966b6ff0bd226e!2s5300%20S%20Cherokee%20Way%2C%20Homosassa%2C%20FL%2034448!5e1!3m2!1sen!2sus!4v1782535044758!5m2!1sen!2sus"
+                    width="100%"
+                    height="450"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin">
+                </iframe>
 
-        <!-- Email address -->
-        <p>✉ macraesofhomosassa@yahoo.com</p>
-        
-        <!-- Clicking this button opens the phone dialer on mobile devices -->
-        <a href="#" class="button" onclick="callNow(); return false;">
-            Call Now
-        </a>
+            </div>
 
-        <!-- link to facebook -->
-        <a href="https://www.facebook.com/share/18axdhbkUP/?mibextid=wwXIfr"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="contact-button">
-         Visit us on Facebook
-     </a>
-    </div>
+            <div class="directions-button">
 
-</section>
+                <a
+                    href="https://www.google.com/maps/dir/?api=1&destination=5300+S+Cherokee+Way,+Homosassa,+FL+34448"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button">
 
-</section>
+                    Get Directions
+
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- =========================
+        CONTACT SECTION
+        ========================= -->
+
+        <section id="contact" class="contact-section">
+
+            <h2>Contact Us</h2>
+
+            <div class="contact-card">
+
+                <h3>MacRae's of Homosassa</h3>
+
+                <p>📍 5300 S Cherokee Way, Homosassa, FL 34448</p>
+
+                <p>📞 (352) 628-2602</p>
+
+                <p>✉ macraesofhomosassa@yahoo.com</p>
+
+                <a href="#" class="button" onclick="callNow(); return false;">
+                    Call Now
+                </a>
+
+                <a
+                    href="https://www.facebook.com/share/18axdhbkUP/?mibextid=wwXIfr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-button">
+                    Visit us on Facebook
+                </a>
+
+            </div>
+
+        </section>
+
+    </section>
+
+</div>
+
 
 <footer class="footer">
 
@@ -370,6 +408,7 @@ GOOGLE MAP SECTION
     </p>
 
 </footer>
+
 
 <!-- =========================
 BOOKING COMING SOON POPUP
@@ -451,6 +490,56 @@ PAGE JAVASCRIPT
             }, 700);
         }
     }
+
+function openRiverCamFullscreen() {
+    const riverCamFrame = document.getElementById("river-cam-frame");
+
+    if (!riverCamFrame) {
+        return;
+    }
+
+    const fullscreenElement =
+        document.fullscreenElement ||
+        document.webkitFullscreenElement;
+
+    if (fullscreenElement) {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+
+        return;
+    }
+
+    if (riverCamFrame.requestFullscreen) {
+        riverCamFrame.requestFullscreen();
+    } else if (riverCamFrame.webkitRequestFullscreen) {
+        riverCamFrame.webkitRequestFullscreen();
+    }
+}
+
+document.addEventListener("fullscreenchange", updateRiverCamFullscreenButton);
+document.addEventListener("webkitfullscreenchange", updateRiverCamFullscreenButton);
+
+function updateRiverCamFullscreenButton() {
+    const button = document.querySelector(".river-cam-fullscreen");
+
+    if (!button) {
+        return;
+    }
+
+    const isFullscreen =
+        document.fullscreenElement ||
+        document.webkitFullscreenElement;
+
+    button.textContent = isFullscreen ? "×" : "⛶";
+    button.setAttribute(
+        "aria-label",
+        isFullscreen ? "Exit river cam fullscreen" : "View river cam fullscreen"
+    );
+}
+
 </script>
 
 </body>
