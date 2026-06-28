@@ -491,53 +491,40 @@ PAGE JAVASCRIPT
         }
     }
 
-function openRiverCamFullscreen() {
+    function openRiverCamFullscreen() {
     const riverCamFrame = document.getElementById("river-cam-frame");
 
-    if (!riverCamFrame) {
-        return;
-    }
+    if (!riverCamFrame) return;
 
-    const fullscreenElement =
-        document.fullscreenElement ||
-        document.webkitFullscreenElement;
+    const isFakeFullscreen = riverCamFrame.classList.contains("river-cam-fake-fullscreen");
 
-    if (fullscreenElement) {
+    if (document.fullscreenElement || document.webkitFullscreenElement || isFakeFullscreen) {
         if (document.exitFullscreen) {
             document.exitFullscreen();
         } else if (document.webkitExitFullscreen) {
             document.webkitExitFullscreen();
         }
 
+        riverCamFrame.classList.remove("river-cam-fake-fullscreen");
+        document.body.classList.remove("no-scroll");
+
         return;
     }
 
     if (riverCamFrame.requestFullscreen) {
-        riverCamFrame.requestFullscreen();
+        riverCamFrame.requestFullscreen().catch(() => {
+            enableRiverCamFakeFullscreen(riverCamFrame);
+        });
     } else if (riverCamFrame.webkitRequestFullscreen) {
         riverCamFrame.webkitRequestFullscreen();
+    } else {
+        enableRiverCamFakeFullscreen(riverCamFrame);
     }
 }
 
-document.addEventListener("fullscreenchange", updateRiverCamFullscreenButton);
-document.addEventListener("webkitfullscreenchange", updateRiverCamFullscreenButton);
-
-function updateRiverCamFullscreenButton() {
-    const button = document.querySelector(".river-cam-fullscreen");
-
-    if (!button) {
-        return;
-    }
-
-    const isFullscreen =
-        document.fullscreenElement ||
-        document.webkitFullscreenElement;
-
-    button.textContent = isFullscreen ? "×" : "⛶";
-    button.setAttribute(
-        "aria-label",
-        isFullscreen ? "Exit river cam fullscreen" : "View river cam fullscreen"
-    );
+function enableRiverCamFakeFullscreen(riverCamFrame) {
+    riverCamFrame.classList.add("river-cam-fake-fullscreen");
+    document.body.classList.add("no-scroll");
 }
 
 </script>

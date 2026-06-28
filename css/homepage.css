@@ -321,6 +321,43 @@
     height: 100%;
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
+.river-cam-frame.river-cam-fake-fullscreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    width: 100vw;
+    height: 100dvh;
+
+    margin: 0;
+    border-radius: 0;
+    aspect-ratio: auto;
+
+    background: #111;
+}
+
+.river-cam-frame.river-cam-fake-fullscreen #macraes-river-cam-holder {
+    width: 100%;
+    height: 100%;
+}
+
+.river-cam-frame.river-cam-fake-fullscreen iframe,
+.river-cam-frame.river-cam-fake-fullscreen video {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.river-cam-frame.river-cam-fake-fullscreen .river-cam-fullscreen {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 10000;
+}
+
 /* =========================
    INFORMATION BACKGROUND
    Map and contact sections sit on the
