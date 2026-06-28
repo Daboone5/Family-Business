@@ -164,18 +164,19 @@ body {
    SUMMARY CARD
    ========================= */
 
-.marine-summary-card {
-
-    border-left: 6px solid var(--color-accent);
-
-}
-
 .marine-card-intro {
 
     margin-bottom: 25px;
 
     opacity: .9;
 
+}
+
+.marine-collapse-panel[data-collapse-key="marine-outlook"] {
+    border-left: none;
+}
+.marine-summary-card {
+    border-left: none;
 }
 
 .marine-status {
@@ -201,10 +202,12 @@ body {
    Today's primary river outlook.
    ========================= */
 
-   .marine-summary-card {
-    border-left: 6px solid var(--color-accent);
+   .marine-collapse-panel[data-collapse-key="marine-outlook"] {
+    border-left: none;
 }
-
+.marine-summary-card {
+    border-left: none;
+}
 .marine-summary-header {
     display: flex;
     justify-content: space-between;
@@ -284,6 +287,142 @@ body {
     opacity: .82;
 
     font-size: 16px;
+}
+
+/* =========================
+   MARINE ADVISORY CARD
+========================= */
+
+.marine-advisory-card {
+    border: 1px solid rgba(255, 255, 255, .12);
+    padding: 24px;
+}
+
+.marine-advisory-content {
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .10);
+    border-radius: var(--radius-medium);
+    padding: 18px;
+}
+
+.marine-advisory-content h3 {
+    color: var(--color-accent);
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.marine-advisory-content p {
+    font-size: 16px;
+    line-height: 1.55;
+    margin-bottom: 8px;
+}
+
+.marine-advisory-content a {
+    color: #8DE3FF;
+    display: inline-block;
+    font-size: 15px;
+    margin-top: 8px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.marine-advisory-status {
+    color: rgba(255, 255, 255, .72);
+}
+
+.marine-advisory-active {
+    border-color: rgba(244, 162, 97, .42);
+    box-shadow: 0 0 22px rgba(244, 162, 97, .12);
+}
+
+.marine-advisory-active h3 {
+    color: #F4A261;
+}
+
+.marine-advisory-meta {
+    color: rgba(255, 255, 255, .65);
+    font-size: 14px;
+}
+
+/* =========================
+   MOON PHASE CARD
+========================= */
+
+.moon-phase-card {
+    padding: 24px;
+}
+
+.moon-phase-content {
+    align-items: center;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .10);
+    border-radius: var(--radius-medium);
+    display: flex;
+    gap: 18px;
+    justify-content: space-between;
+    padding: 18px;
+}
+
+.moon-phase-content h3 {
+    color: var(--color-accent);
+    font-size: 22px;
+    margin-bottom: 6px;
+}
+
+.moon-phase-content p {
+    color: rgba(255, 255, 255, .72);
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.moon-phase-illumination {
+    color: white;
+    font-size: 28px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+/* =========================
+   OUTLOOK ADVISORY SUMMARY
+========================= */
+
+.marine-outlook-advisory {
+    border-top: 1px solid rgba(255, 255, 255, .10);
+    margin-top: 22px;
+    padding-top: 18px;
+}
+
+.marine-outlook-advisory .marine-label {
+    margin-bottom: 10px;
+}
+
+.marine-outlook-advisory .marine-advisory-content {
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .10);
+    border-radius: var(--radius-medium);
+    padding: 16px;
+}
+
+.marine-outlook-advisory .marine-advisory-content h3 {
+    color: var(--color-accent);
+    font-size: 19px;
+    margin-bottom: 6px;
+}
+
+.marine-outlook-advisory .marine-advisory-content p {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.marine-outlook-advisory .marine-advisory-content a {
+    color: #8DE3FF;
+    display: inline-block;
+    font-size: 14px;
+    margin-top: 6px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 /* =========================
@@ -624,6 +763,72 @@ body {
 .tide-data-source a:focus {
     color: #8DE3FF;
     text-decoration-color: #8DE3FF;
+}
+
+/* =========================
+   COLLAPSIBLE MARINE PANELS
+========================= */
+
+.marine-collapse-panel {
+    overflow: hidden;
+}
+
+.marine-panel-toggle {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: #F4A261;
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    font-size: 1.8rem;
+    font-weight: 800;
+    justify-content: space-between;
+    line-height: 1.2;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+}
+
+.marine-panel-toggle:focus-visible {
+    outline: 2px solid #8DE3FF;
+    outline-offset: 6px;
+}
+
+.marine-panel-chevron {
+    border-bottom: 2px solid #F4A261;
+    border-right: 2px solid #F4A261;
+    display: inline-block;
+    height: 12px;
+    margin-left: 16px;
+    transform: rotate(45deg);
+    transition: transform .28s ease;
+    width: 12px;
+}
+
+.marine-collapse-panel.is-collapsed .marine-panel-chevron {
+    transform: rotate(-45deg);
+}
+
+.marine-panel-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+        max-height .3s ease,
+        opacity .25s ease;
+}
+
+.marine-collapse-panel.is-open .marine-panel-content {
+    opacity: 1;
+}
+
+.marine-panel-inner {
+    padding-top: 18px;
+}
+
+.marine-collapse-panel.is-collapsed .marine-panel-inner {
+    padding-top: 0;
 }
 
 /* =========================

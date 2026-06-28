@@ -55,7 +55,6 @@
     <link rel="stylesheet" href="css/navigation.css">
     <link rel="stylesheet" href="css/buttons.css">
     <link rel="stylesheet" href="css/homepage.css">
-    <link rel="stylesheet" href="css/weather.css">
     <link rel="stylesheet" href="css/map-contact.css">
     <link rel="stylesheet" href="css/responsive.css">
 
@@ -270,30 +269,11 @@
 </section>
 
 <!-- =========================
-INFO BACKGROUND SECTION
-Weather, map, and contact
+INFO BACKGROUND SECTION,
+map, and contact
 ========================= -->
 
 <section class="info-background">
-
-<!-- =========================
-WEATHER SECTION
-========================= -->
-
-<section class="weather-section">
-
-    <h2>Homosassa River Conditions</h2>
-
-    <div class="weather-subtitle">
-        <span>Marine Forecast</span>
-        <span>Mouth of the Homosassa River</span>
-    </div>
-
-    <div id="weather-card" class="custom-weather-card">
-        Loading weather...
-    </div>
-
-</section>
 
 <!-- =========================
 GOOGLE MAP SECTION
@@ -428,320 +408,49 @@ PAGE JAVASCRIPT
 ========================= -->
 
 <script>
+    /* =========================
+       WEBSITE FUNCTIONS
+    ========================= */
 
-   /* =========================
-   WEBSITE FUNCTIONS
-========================= */
-
-// Opens the booking/reservation popup.
-function showBookingMessage() {
-    document.getElementById("booking-popup").classList.add("active");
-}
-
-// Closes the booking/reservation popup.
-function hideBookingMessage() {
-    document.getElementById("booking-popup").classList.remove("active");
-}
-
-// Opens and closes the mobile navigation menu.
-function toggleMenu() {
-    document.getElementById("mobile-menu").classList.toggle("active");
-}
-
-// Handles the "Call Now" button inside the booking popup.
-// On phones/tablets, it opens the phone dialer.
-// On desktop, it closes the popup, scrolls to the contact card,
-// and briefly highlights the contact information.
-function callNow() {
-
-    const isTouchDevice =
-        ('ontouchstart' in window) ||
-        (navigator.maxTouchPoints > 0);
-
-    if (isTouchDevice) {
-
-        window.location.href = "tel:+13526282602";
-
-    } else {
-
-        hideBookingMessage();
-
-        const contact = document.getElementById("contact");
-
-        contact.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-
-        setTimeout(() => {
-            document.querySelector(".contact-card").classList.add("contact-highlight");
-
-            setTimeout(() => {
-                document.querySelector(".contact-card").classList.remove("contact-highlight");
-            }, 1200);
-
-        }, 700);
+    function showBookingMessage() {
+        document.getElementById("booking-popup").classList.add("active");
     }
-}
 
+    function hideBookingMessage() {
+        document.getElementById("booking-popup").classList.remove("active");
+    }
 
-/* =========================
-   HOMOSASSA RIVER CONDITIONS
-========================= */
+    function toggleMenu() {
+        document.getElementById("mobile-menu").classList.toggle("active");
+    }
 
-function getWeatherIcon(code) {
-    if (code === 0) return "☀️";
-    if ([1, 2].includes(code)) return "🌤️";
-    if (code === 3) return "☁️";
-    if ([45, 48].includes(code)) return "🌫️";
-    if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return "🌧️";
-    if ([95, 96, 99].includes(code)) return "⛈️";
-    return "🌤️";
-}
+    function callNow() {
+        const isTouchDevice =
+            ("ontouchstart" in window) ||
+            (navigator.maxTouchPoints > 0);
 
-function getWindDirection(degrees) {
-    const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-    return directions[Math.round(degrees / 45) % 8];
-}
-
-function getBoatingOutlook(windSpeed, rainChance) {
-    if (windSpeed >= 20 || rainChance >= 70) return "Use Caution";
-    if (windSpeed >= 12 || rainChance >= 40) return "Fair";
-    return "Good";
-}
-
-function formatTime(timeString) {
-    return new Date(timeString).toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit"
-    });
-}
-
-function formatHour(hour) {
-    const suffix = hour >= 12 ? "PM" : "AM";
-    const displayHour = hour % 12 === 0 ? 12 : hour % 12;
-    return `${displayHour} ${suffix}`;
-}
-
-function getDailySummary(date, hourly) {
-    const dayHours = hourly.time
-        .map((time, index) => ({
-            time,
-            code: hourly.weather_code[index]
-        }))
-        .filter(hour => hour.time.startsWith(date));
-
-    const counts = {
-        clear: 0,
-        cloudy: 0,
-        rain: 0,
-        storm: 0,
-        fog: 0
-    };
-
-    const rainOrStormHours = [];
-
-    dayHours.forEach(hour => {
-        const code = hour.code;
-        const hourNumber = new Date(hour.time).getHours();
-
-        if (code === 0) {
-            counts.clear++;
-        } else if ([1, 2, 3].includes(code)) {
-            counts.cloudy++;
-        } else if ([45, 48].includes(code)) {
-            counts.fog++;
-        } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
-            counts.rain++;
-            rainOrStormHours.push(hourNumber);
-        } else if ([95, 96, 99].includes(code)) {
-            counts.storm++;
-            rainOrStormHours.push(hourNumber);
-        }
-    });
-
-    let timingNote = "";
-
-    if (rainOrStormHours.length > 0) {
-        const earliest = Math.min(...rainOrStormHours);
-        const latest = Math.max(...rainOrStormHours);
-
-        const hasMorning = rainOrStormHours.some(hour => hour >= 5 && hour < 12);
-        const hasAfternoon = rainOrStormHours.some(hour => hour >= 12 && hour < 18);
-        const hasEvening = rainOrStormHours.some(hour => hour >= 18 && hour < 24);
-
-        if (rainOrStormHours.length >= 8) {
-            timingNote = "scattered throughout the day";
-        } else if (hasMorning && hasAfternoon && hasEvening) {
-            timingNote = "possible throughout the day";
-        } else if (hasMorning && hasAfternoon) {
-            timingNote = "morning into afternoon";
-        } else if (hasAfternoon && hasEvening) {
-            timingNote = "afternoon into evening";
-        } else if (hasMorning) {
-            timingNote = "mainly morning";
-        } else if (hasAfternoon) {
-            timingNote = "mainly afternoon";
-        } else if (hasEvening) {
-            timingNote = "mainly evening";
+        if (isTouchDevice) {
+            window.location.href = "tel:+13526282602";
         } else {
-            timingNote = `${formatHour(earliest)}–${formatHour(latest)}`;
-        }
-    }
+            hideBookingMessage();
 
-    let summary;
+            const contact = document.getElementById("contact");
 
-    if (counts.storm >= 3) {
-        summary = { icon: "⛈️", label: "Storms Likely" };
-    } else if (counts.rain >= 4) {
-        summary = { icon: "🌧️", label: "Rain Likely" };
-    } else if (counts.storm > 0) {
-        summary = { icon: "🌦️", label: "Storms Possible" };
-    } else if (counts.rain > 0) {
-        summary = { icon: "🌦️", label: "Showers Possible" };
-    } else if (counts.cloudy > counts.clear) {
-        summary = { icon: "☁️", label: "Mostly Cloudy" };
-    } else if (counts.cloudy > 0) {
-        summary = { icon: "🌤️", label: "Partly Cloudy" };
-    } else {
-        summary = { icon: "☀️", label: "Sunny" };
-    }
-
-    summary.note = timingNote;
-    return summary;
-}
-
-function getDailyNarrative(summary, boatingOutlook, windSpeed, rainChance) {
-    if (windSpeed >= 20) {
-        return "Windy conditions are expected today. Smaller vessels should use caution on the Homosassa River.";
-    }
-
-    if (summary.label === "Storms Likely") {
-        return `Thunderstorms are expected ${summary.note || "today"}. Visitors planning time on the river should monitor changing weather conditions.`;
-    }
-
-    if (summary.label === "Storms Possible") {
-        return `A few thunderstorms may develop ${summary.note || "later today"}. Boating conditions may still be favorable at times, but check the radar before heading out.`;
-    }
-
-    if (summary.label === "Rain Likely") {
-        return `Periods of rain are expected ${summary.note || "today"}. Outdoor plans may be affected, but it can still be a good day to enjoy the tiki bar and waterfront views.`;
-    }
-
-    if (summary.label === "Showers Possible") {
-        return `Showers are possible ${summary.note || "today"}. There should still be opportunities to enjoy the Homosassa River between passing showers.`;
-    }
-
-    if (windSpeed >= 12 || boatingOutlook === "Fair") {
-        return "Breezy conditions are expected today. Boating can still be enjoyable, but expect a little chop on open water.";
-    }
-
-    if (summary.label === "Mostly Cloudy") {
-        return "Mostly cloudy skies today, but conditions should remain comfortable for visiting the waterfront, dining, and relaxing by the river.";
-    }
-
-    if (summary.label === "Partly Cloudy") {
-        return "A warm mix of sun and clouds should make for a pleasant day on the Homosassa River.";
-    }
-
-    if (summary.label === "Sunny") {
-        return "Sunny skies and light winds make today a great day for boating, fishing, and waterfront dining.";
-    }
-
-    return "Check current conditions before heading out, and enjoy your time on the Homosassa River.";
-}
-
-async function loadWeather() {
-    const weatherCard = document.getElementById("weather-card");
-
-    const url =
-        "https://api.open-meteo.com/v1/forecast" +
-        "?latitude=28.7716" +
-        "&longitude=-82.6957" +
-        "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m" +
-        "&hourly=precipitation_probability,uv_index,weather_code" +
-        "&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code,sunrise,sunset" +
-        "&temperature_unit=fahrenheit" +
-        "&wind_speed_unit=mph" +
-        "&timezone=America%2FNew_York";
-
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        const current = data.current;
-        const hourly = data.hourly;
-        const daily = data.daily;
-
-        const todaySummary = getDailySummary(daily.time[0], hourly);
-
-        const rainChance = daily.precipitation_probability_max[0];
-        const uvIndex = hourly.uv_index ? hourly.uv_index[0] : "N/A";
-
-        const windDirection = getWindDirection(current.wind_direction_10m);
-        const boatingOutlook = getBoatingOutlook(current.wind_speed_10m, rainChance);
-
-        const riverSummary = getDailyNarrative(
-            todaySummary,
-            boatingOutlook,
-            current.wind_speed_10m,
-            rainChance
-        );
-
-        const forecastDays = daily.time.slice(0, 7).map((date, index) => {
-            const dayName = new Date(date + "T00:00:00").toLocaleDateString("en-US", {
-                weekday: "short"
+            contact.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
             });
 
-            const summary = getDailySummary(date, hourly);
+            setTimeout(() => {
+                document.querySelector(".contact-card").classList.add("contact-highlight");
 
-            return `
-                <div class="forecast-day">
-                    <h5>${dayName}</h5>
-                    <div class="forecast-icon">${summary.icon}</div>
-                    <p>${summary.label}</p>
-                    ${summary.note ? `<p class="forecast-note">${summary.note}</p>` : ""}
-                    <p><strong>${Math.round(daily.temperature_2m_max[index])}°</strong> / ${Math.round(daily.temperature_2m_min[index])}°</p>
-                    <p>Rain ${daily.precipitation_probability_max[index]}%</p>
-                </div>
-            `;
-        }).join("");
+                setTimeout(() => {
+                    document.querySelector(".contact-card").classList.remove("contact-highlight");
+                }, 1200);
 
-        weatherCard.innerHTML = `
-            <div class="weather-main">
-
-                <div class="weather-current">
-                    <div class="weather-icon">${todaySummary.icon}</div>
-                    <h3>${Math.round(current.temperature_2m)}°F</h3>
-                    <p>${todaySummary.label}</p>
-                    <p class="river-summary">${riverSummary}</p>
-                    <p>Feels like ${Math.round(current.apparent_temperature)}°F</p>
-                </div>
-
-                <div class="weather-details">
-                    <h4>River Conditions</h4>
-                    <p>Wind: ${windDirection} ${Math.round(current.wind_speed_10m)} mph</p>
-                    <p>Rain Chance: ${rainChance}%</p>
-                    <p>UV Index: ${uvIndex}</p>
-                    <p>Sunrise: ${formatTime(daily.sunrise[0])}</p>
-                    <p>Sunset: ${formatTime(daily.sunset[0])}</p>
-                    <p>Boating Outlook: <strong>${boatingOutlook}</strong></p>
-                </div>
-
-            </div>
-
-            <div class="forecast-grid">
-                ${forecastDays}
-            </div>
-        `;
-
-    } catch (error) {
-        weatherCard.innerHTML = `<p>Weather information is temporarily unavailable.</p>`;
+            }, 700);
+        }
     }
-}
-
-loadWeather();
-
 </script>
 
 </body>
