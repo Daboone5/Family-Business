@@ -21,219 +21,150 @@
 ========================= */
 
 body {
-
     background:
         linear-gradient(rgba(10,8,25,.72), rgba(10,8,25,.72)),
         url("../images/riverchart.jpg");
 
     background-size: cover;
-
     background-position: center;
-
     background-attachment: fixed;
-
     background-repeat: no-repeat;
-
 }
 
 /* =========================
    MARINE PAGE HEADER
    Compact dashboard-style page intro.
-   ========================= */
+========================= */
 
-   .marine-page-header {
-
+.marine-page-header {
     color: white;
-
     text-align: center;
-
     padding: 80px 8% 55px;
-
 }
 
 .marine-page-header h1 {
-
     font-size: 52px;
-
     margin-bottom: 15px;
-
 }
 
 .marine-page-header p {
-
     font-size: 20px;
-
     line-height: 1.5;
-
     margin-bottom: 25px;
-
 }
 
 .marine-page-tags {
-
     display: flex;
-
     justify-content: center;
     flex-wrap: wrap;
-
     gap: 12px;
-
 }
 
 .marine-page-tags span {
-
     background: rgba(255,255,255,.12);
-
     border: 1px solid rgba(255,255,255,.22);
-
     color: white;
-
     padding: 8px 14px;
-
     border-radius: 999px;
-
     font-size: 14px;
-
 }
 
 /* =========================
    MARINE DASHBOARD BACKGROUND
    Keeps the dashboard section transparent
    so the body background remains continuous.
-   ========================= */
+========================= */
 
-   .marine-background {
-
+.marine-background {
     background: transparent;
-
     padding: 80px 8%;
-
 }
 
 /* =========================
    MAIN CONTENT
-   ========================= */
+========================= */
 
 .marine-content {
-
     max-width: 1200px;
-
     margin: auto;
-
 }
 
 /* =========================
    MARINE CARD
-   ========================= */
+========================= */
 
 .marine-card {
-
     background: rgba(23,16,47,.96);
-
     color: white;
-
     border-radius: var(--radius-large);
-
     padding: 35px;
-
     margin-bottom: 35px;
-
     box-shadow: var(--shadow-card);
-
 }
 
 .marine-card h2 {
-
     font-size: 34px;
-
     margin-bottom: 20px;
-
     color: var(--color-accent);
-
 }
 
 .marine-card p {
-
     line-height: 1.7;
-
     font-size: 18px;
-
 }
-
-/* =========================
-   SUMMARY CARD
-   ========================= */
 
 .marine-card-intro {
-
+    margin-top: 0;
     margin-bottom: 25px;
-
     opacity: .9;
-
-}
-
-.marine-collapse-panel[data-collapse-key="marine-outlook"] {
-    border-left: none;
-}
-.marine-summary-card {
-    border-left: none;
-}
-
-.marine-status {
-
-    display: inline-block;
-
-    padding: 12px 22px;
-
-    background: var(--color-accent);
-
-    color: #111;
-
-    font-weight: bold;
-
-    border-radius: 999px;
-
-    margin-bottom: 25px;
-
 }
 
 /* =========================
    SUMMARY CARD
    Today's primary river outlook.
-   ========================= */
+========================= */
 
-   .marine-collapse-panel[data-collapse-key="marine-outlook"] {
+.marine-collapse-panel[data-collapse-key="marine-outlook"] {
     border-left: none;
 }
+
 .marine-summary-card {
     border-left: none;
+    position: relative;
 }
+
 .marine-summary-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    display: block;
+    margin-bottom: 10px;
+    padding-right: 105px;
+    position: relative;
+}
 
-    gap: 25px;
+.marine-summary-header h2 {
+    margin: 0;
+}
 
-    margin-bottom: 20px;
+.marine-summary-card .marine-card-intro {
+    max-width: 850px;
+    margin-top: 0;
+    margin-bottom: 18px;
+    opacity: .95;
+    padding-right: 105px;
 }
 
 .marine-label {
     color: var(--color-accent);
-
     font-size: 14px;
-
     text-transform: uppercase;
     letter-spacing: 2px;
-
     margin-bottom: 8px;
 }
 
-.marine-summary-header h2 {
-    margin-bottom: 0;
-}
-
 .marine-score {
+    position: absolute;
+    top: 0;
+    right: 0;
+
     min-width: 82px;
     height: 82px;
 
@@ -252,41 +183,35 @@ body {
     box-shadow: 0 0 25px rgba(244,162,97,.35);
 }
 
-.marine-card-intro {
-    max-width: 850px;
-
-    margin-bottom: 25px;
-
-    opacity: .95;
-}
-
 .marine-condition-list {
     display: flex;
     flex-wrap: wrap;
-
     gap: 12px;
-
     margin-bottom: 25px;
 }
 
 .marine-condition-list span {
     background: rgba(255,255,255,.08);
-
     border: 1px solid rgba(255,255,255,.18);
-
     border-radius: 999px;
-
     padding: 10px 14px;
-
     font-size: 15px;
 }
 
 .marine-summary-note {
     max-width: 900px;
-
     opacity: .82;
-
     font-size: 16px;
+}
+
+.marine-status {
+    display: inline-block;
+    padding: 12px 22px;
+    background: var(--color-accent);
+    color: #111;
+    font-weight: bold;
+    border-radius: 999px;
+    margin-bottom: 25px;
 }
 
 /* =========================
@@ -427,60 +352,43 @@ body {
 
 /* =========================
    INFORMATION GRID
-   ========================= */
+========================= */
 
 .marine-grid {
-
     display: grid;
-
     grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-
     gap: 25px;
-
     margin-top: 25px;
-
 }
 
 .marine-info-box {
-
     background: rgba(255,255,255,.08);
-
     border: 1px solid rgba(255,255,255,.15);
-
     border-radius: var(--radius-medium);
-
     padding: 25px;
-
 }
 
 .marine-info-box h3 {
-
     color: var(--color-accent);
-
     margin-bottom: 15px;
-
 }
 
 /* =========================
    RADAR
-   ========================= */
+========================= */
 
 .radar-card iframe {
-
     margin-top: 20px;
-
     border-radius: var(--radius-medium);
-
     overflow: hidden;
-
 }
 
 /* =========================
    MARINE 7-DAY FORECAST
    Morning / Afternoon / Evening cards.
-   ========================= */
+========================= */
 
-   .marine-forecast-grid {
+.marine-forecast-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 22px;
@@ -567,9 +475,9 @@ body {
 
 /* =========================
    CURRENT TIDE STATUS
-   ========================= */
+========================= */
 
-   .current-tide-status {
+.current-tide-status {
     margin-bottom: 22px;
 }
 
@@ -598,9 +506,9 @@ body {
 
 /* =========================
    TIDE CHART
-   ========================= */
+========================= */
 
-   .tide-card {
+.tide-card {
     overflow: hidden;
 }
 
@@ -630,7 +538,6 @@ body {
     width: 100%;
     min-width: 900px;
     height: 500px;
-
     display: block;
 }
 
@@ -832,13 +739,29 @@ body {
 }
 
 /* =========================
+   MOBILE SUMMARY SAFETY
+========================= */
+
+@media (max-width: 768px) {
+    .marine-summary-header {
+        padding-right: 0;
+    }
+
+    .marine-summary-card .marine-card-intro {
+        padding-right: 0;
+    }
+
+    .marine-score {
+        position: static;
+        margin-top: 16px;
+    }
+}
+
+/* =========================
    RETURN SECTION
-   ========================= */
+========================= */
 
 .marine-back {
-
     text-align: center;
-
     margin-top: 60px;
-
 }

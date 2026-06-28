@@ -563,7 +563,6 @@ function getMarineNarrative(todaySummary, boatingOutlook, windSpeed) {
             <div class="marine-summary-header">
 
                 <div>
-                    <p class="marine-label">Today's Outlook</p>
                     <h2>${marineSummary}</h2>
                 </div>
 
@@ -583,7 +582,7 @@ function getMarineNarrative(todaySummary, boatingOutlook, windSpeed) {
                 <span>${ICONS.temperature} High ${highTemp}&deg; / Low ${lowTemp}&deg;</span>
                 <span>${ICONS.wind} Wind ${windDirection} ${windSpeed} mph</span>
                 <span>${ICONS.rain} Rain Chance ${rainChance}%</span>
-                <span>${ICONS.sun} Peak UV Index: ${uvIndex !== null ? uvIndex : "N/A"} &mdash; ${uvRisk}</span>
+                <span>${ICONS.sunny} Peak UV Index: ${uvIndex !== null ? uvIndex : "N/A"} &mdash; ${uvRisk}</span>
                 <span>${ICONS.moon} Moon Phase: ${moonPhase.phase} &mdash; ${moonPhase.illumination}%</span>
                 <span>${ICONS.boat} Boating Outlook: ${boatingOutlook}</span>
 
@@ -621,474 +620,496 @@ function getMarineNarrative(todaySummary, boatingOutlook, windSpeed) {
     }
 }
 
-        /* =========================
-           NOAA TIDE CHART
-        ========================= */
+/* =========================
+   NOAA TIDE CHART
+========================= */
 
-        async function loadTideChart() {
-            const tideChart = document.getElementById("tide-chart");
-            const tideStatusCard = document.getElementById("current-tide-status");
+async function loadTideChart() {
+    const tideChart = document.getElementById("tide-chart");
+    const tideStatusCard = document.getElementById("current-tide-status");
 
-            if (!tideChart) {
-                return;
-            }
+    if (!tideChart) {
+        return;
+    }
 
-            const station = "8727277";
-            const today = new Date();
+    const station = "8727277";
+    const today = new Date();
 
-            const baseUrl =
-                "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter" +
-                "?product=predictions" +
-                "&application=MacRaesWebsite" +
-                `&begin_date=${formatNoaaDate(today)}` +
-                `&end_date=${formatNoaaDate(today, 1)}` +
-                "&datum=MLLW" +
-                `&station=${station}` +
-                "&time_zone=lst_ldt" +
-                "&units=english" +
-                "&format=json";
+    const baseUrl =
+        "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter" +
+        "?product=predictions" +
+        "&application=MacRaesWebsite" +
+        `&begin_date=${formatNoaaDate(today)}` +
+        `&end_date=${formatNoaaDate(today, 1)}` +
+        "&datum=MLLW" +
+        `&station=${station}` +
+        "&time_zone=lst_ldt" +
+        "&units=english" +
+        "&format=json";
 
-            const smoothUrl = baseUrl + "&interval=6";
-            const highLowUrl = baseUrl + "&interval=hilo";
+    const smoothUrl = baseUrl + "&interval=6";
+    const highLowUrl = baseUrl + "&interval=hilo";
 
-            try {
-                const [smoothResponse, highLowResponse, sunTimes] = await Promise.all([
-                    fetch(smoothUrl),
-                    fetch(highLowUrl),
-                    fetchSunTimes()
-                ]);
+    try {
+        const [smoothResponse, highLowResponse, sunTimes] = await Promise.all([
+            fetch(smoothUrl),
+            fetch(highLowUrl),
+            fetchSunTimes()
+        ]);
 
-                const smoothData = await smoothResponse.json();
-                const highLowData = await highLowResponse.json();
+        const smoothData = await smoothResponse.json();
+        const highLowData = await highLowResponse.json();
 
-                const smoothPredictions = smoothData.predictions;
-                const highLowPredictions = highLowData.predictions || [];
+        const smoothPredictions = smoothData.predictions;
+        const highLowPredictions = highLowData.predictions || [];
 
-                if (!smoothPredictions || smoothPredictions.length === 0) {
-                    tideChart.innerHTML = "<p>Tide information is temporarily unavailable.</p>";
-                    return;
-                }
-
-                renderSunTimesCard(sunTimes);
-
-                if (tideStatusCard) {
-                    const tideStatus = getCurrentTideStatus(
-                        smoothPredictions,
-                        highLowPredictions
-                    );
-
-                    tideStatusCard.innerHTML = `
-                        <div class="tide-status-main">
-
-                            <div>
-                                <p class="marine-label">Current Tide</p>
-                                <h3>${tideStatus.height} ft</h3>
-                                <p>${tideStatus.direction}</p>
-                            </div>
-
-                            <div>
-                                <p class="marine-label">Next Tide</p>
-                                <h3>${tideStatus.nextType}</h3>
-                                <p>${tideStatus.nextTime} - ${tideStatus.timeUntil}</p>
-                            </div>
-
-                        </div>
-
-                        <p class="tide-updated-time">
-                            <span class="tide-live-indicator">LIVE</span>
-                            Updated ${formatSiteTime(new Date())}
-                        </p>
-                    `;
-                }
-
-                tideChart.innerHTML =
-                    buildTideChartDate() +
-                    buildTideSvg(
-                        smoothPredictions,
-                        highLowPredictions,
-                        sunTimes
-                    );
-
-                    updateMarinePanelHeights();
-
-            } catch (error) {
-                tideChart.innerHTML = `
-                    <p>
-                        Unable to load NOAA tide predictions.
-                    </p>
-                `;
-            }
+        if (!smoothPredictions || smoothPredictions.length === 0) {
+            tideChart.innerHTML = "<p>Tide information is temporarily unavailable.</p>";
+            return;
         }
 
-        async function fetchSunTimes() {
-            const url =
-                "https://api.open-meteo.com/v1/forecast" +
-                "?latitude=28.7716" +
-                "&longitude=-82.6957" +
-                "&daily=sunrise,sunset" +
-                "&timezone=America%2FNew_York";
+        renderSunTimesCard(sunTimes);
 
-            const response = await fetch(url);
-            const data = await response.json();
+        if (tideStatusCard) {
+            const tideStatus = getCurrentTideStatus(
+                smoothPredictions,
+                highLowPredictions
+            );
 
-            return {
-                sunrise: parseSiteDateTime(data.daily.sunrise[0]),
-                sunset: parseSiteDateTime(data.daily.sunset[0])
-            };
-        }
-
-        function renderSunTimesCard(sunTimes) {
-            const sunTimesCard = document.getElementById("sun-times");
-
-            if (!sunTimesCard || !sunTimes) {
-                return;
-            }
-
-            sunTimesCard.innerHTML = `
-                <div class="sun-times-header">
-                    <div>
-                        <p class="marine-label">Sunrise / Sunset</p>
-                    </div>
-                </div>
-
-                <div class="sun-times-grid">
+            tideStatusCard.innerHTML = `
+                <div class="tide-status-main">
 
                     <div>
-                        <span>Sunrise</span>
-                        <strong>${formatSiteTime(sunTimes.sunrise)}</strong>
+                        <p class="marine-label">Current Tide</p>
+                        <h3>${tideStatus.height} ft</h3>
+                        <p>${tideStatus.direction}</p>
                     </div>
 
                     <div>
-                        <span>Sunset</span>
-                        <strong>${formatSiteTime(sunTimes.sunset)}</strong>
+                        <p class="marine-label">Next Tide</p>
+                        <h3>${tideStatus.nextType}</h3>
+                        <p>${tideStatus.nextTime} - ${tideStatus.timeUntil}</p>
                     </div>
 
                 </div>
 
-                <p class="sun-times-note">
-                    <span class="sun-times-legend-swatch" aria-hidden="true"></span>
-                    Warm shading marks daylight hours on the tide chart.
+                <p class="tide-updated-time">
+                    <span class="tide-live-indicator">LIVE</span>
+                    Updated ${formatSiteTime(new Date())}
                 </p>
             `;
         }
 
-        function buildTideChartDate() {
-            const siteNow = getSiteNow();
+        tideChart.innerHTML = buildTideSvg(
+            smoothPredictions,
+            highLowPredictions,
+            sunTimes
+        );
 
-            const dayName = formatSiteDate(siteNow, {
-                weekday: "long"
-            });
+        updateMarinePanelHeights();
 
-            const displayDate = formatSiteDate(siteNow, {
-                month: "long",
-                day: "numeric"
-            });
+    } catch (error) {
+        tideChart.innerHTML = `
+            <p>
+                Unable to load NOAA tide predictions.
+            </p>
+        `;
+    }
+}
 
-            return `
-                <div class="tide-chart-date">
-                    ${dayName} &bull; ${displayDate}
-                </div>
-            `;
+async function fetchSunTimes() {
+    const url =
+        "https://api.open-meteo.com/v1/forecast" +
+        "?latitude=28.7716" +
+        "&longitude=-82.6957" +
+        "&daily=sunrise,sunset" +
+        "&timezone=America%2FNew_York";
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    return {
+        sunrise: parseSiteDateTime(data.daily.sunrise[0]),
+        sunset: parseSiteDateTime(data.daily.sunset[0])
+    };
+}
+
+function renderSunTimesCard(sunTimes) {
+    const sunTimesCard = document.getElementById("sun-times");
+
+    if (!sunTimesCard || !sunTimes) {
+        return;
+    }
+
+    sunTimesCard.innerHTML = `
+        <div class="sun-times-header">
+            <div>
+                <p class="marine-label">Sunrise / Sunset</p>
+            </div>
+        </div>
+
+        <div class="sun-times-grid">
+
+            <div>
+                <span>Sunrise</span>
+                <strong>${formatSiteTime(sunTimes.sunrise)}</strong>
+            </div>
+
+            <div>
+                <span>Sunset</span>
+                <strong>${formatSiteTime(sunTimes.sunset)}</strong>
+            </div>
+
+        </div>
+
+        <p class="sun-times-note">
+            <span class="sun-times-legend-swatch" aria-hidden="true"></span>
+            Warm shading marks daylight hours on the tide chart.
+        </p>
+    `;
+}
+
+function getCurrentTideStatus(predictions, highLowPredictions = []) {
+    const now = getSiteNow();
+
+    const sortedPredictions = predictions
+        .map(item => ({
+            time: parseSiteDateTime(item.t),
+            height: Number(item.v)
+        }))
+        .sort((a, b) => a.time - b.time);
+
+    const closestIndex = sortedPredictions.reduce((bestIndex, item, index) => {
+        const currentDifference = Math.abs(item.time - now);
+        const bestDifference = Math.abs(sortedPredictions[bestIndex].time - now);
+
+        return currentDifference < bestDifference ? index : bestIndex;
+    }, 0);
+
+    const currentPoint = sortedPredictions[closestIndex];
+    const previousPoint = sortedPredictions[Math.max(0, closestIndex - 1)];
+    const nextPoint = sortedPredictions[Math.min(sortedPredictions.length - 1, closestIndex + 1)];
+
+    let direction = "Steady";
+
+    if (nextPoint.height > previousPoint.height) {
+        direction = "Rising";
+    } else if (nextPoint.height < previousPoint.height) {
+        direction = "Falling";
+    }
+
+    const nextTide = highLowPredictions
+        .map(item => ({
+            type: item.type === "H" ? "High Tide" : "Low Tide",
+            time: parseSiteDateTime(item.t),
+            height: Number(item.v)
+        }))
+        .filter(item => item.time > now)
+        .sort((a, b) => a.time - b.time)[0];
+
+    const formatDuration = futureDate => {
+        const diffMinutes = Math.max(0, Math.round((futureDate - now) / 60000));
+        const hours = Math.floor(diffMinutes / 60);
+        const minutes = diffMinutes % 60;
+
+        if (hours === 0) {
+            return `${minutes} min away`;
         }
 
-        function getCurrentTideStatus(predictions, highLowPredictions = []) {
-            const now = getSiteNow();
+        return `${hours} hr ${minutes} min away`;
+    };
 
-            const sortedPredictions = predictions
-                .map(item => ({
-                    time: parseSiteDateTime(item.t),
-                    height: Number(item.v)
-                }))
-                .sort((a, b) => a.time - b.time);
+    return {
+        height: currentPoint.height.toFixed(2),
+        direction,
+        nextType: nextTide ? nextTide.type : "Unavailable",
+        nextTime: nextTide ? formatSiteTime(nextTide.time) : "N/A",
+        timeUntil: nextTide ? formatDuration(nextTide.time) : "N/A"
+    };
+}
 
-            const closestIndex = sortedPredictions.reduce((bestIndex, item, index) => {
-                const currentDifference = Math.abs(item.time - now);
-                const bestDifference = Math.abs(sortedPredictions[bestIndex].time - now);
+function buildTideChartBackground(sunTimes, xScale, plotTop, plotBottom, firstTime, lastTime) {
+    if (!sunTimes || !sunTimes.sunrise || !sunTimes.sunset) {
+        return "";
+    }
 
-                return currentDifference < bestDifference ? index : bestIndex;
-            }, 0);
+    const sunriseTime = Math.max(sunTimes.sunrise.getTime(), firstTime);
+    const sunsetTime = Math.min(sunTimes.sunset.getTime(), lastTime);
 
-            const currentPoint = sortedPredictions[closestIndex];
-            const previousPoint = sortedPredictions[Math.max(0, closestIndex - 1)];
-            const nextPoint = sortedPredictions[Math.min(sortedPredictions.length - 1, closestIndex + 1)];
+    if (sunsetTime <= firstTime || sunriseTime >= lastTime || sunsetTime <= sunriseTime) {
+        return "";
+    }
 
-            let direction = "Steady";
+    const daylightX = xScale(new Date(sunriseTime));
+    const daylightWidth = xScale(new Date(sunsetTime)) - daylightX;
 
-            if (nextPoint.height > previousPoint.height) {
-                direction = "Rising";
-            } else if (nextPoint.height < previousPoint.height) {
-                direction = "Falling";
-            }
+    return `
+        <rect
+            x="${daylightX}"
+            y="${plotTop}"
+            width="${daylightWidth}"
+            height="${plotBottom - plotTop}"
+            fill="rgba(244,162,97,.08)">
+        </rect>
+    `;
+}
 
-            const nextTide = highLowPredictions
-                .map(item => ({
-                    type: item.type === "H" ? "High Tide" : "Low Tide",
-                    time: parseSiteDateTime(item.t),
-                    height: Number(item.v)
-                }))
-                .filter(item => item.time > now)
-                .sort((a, b) => a.time - b.time)[0];
+function getCurrentTideCurvePoint(chartPredictions, siteNow) {
+    const nowTime = siteNow.getTime();
 
-            const formatDuration = futureDate => {
-                const diffMinutes = Math.max(0, Math.round((futureDate - now) / 60000));
-                const hours = Math.floor(diffMinutes / 60);
-                const minutes = diffMinutes % 60;
+    for (let index = 0; index < chartPredictions.length - 1; index++) {
+        const current = chartPredictions[index];
+        const next = chartPredictions[index + 1];
 
-                if (hours === 0) {
-                    return `${minutes} min away`;
-                }
-
-                return `${hours} hr ${minutes} min away`;
-            };
+        if (nowTime >= current.time.getTime() && nowTime <= next.time.getTime()) {
+            const timeRange = next.time.getTime() - current.time.getTime();
+            const progress = timeRange === 0 ? 0 : (nowTime - current.time.getTime()) / timeRange;
+            const value = current.value + (next.value - current.value) * progress;
 
             return {
-                height: currentPoint.height.toFixed(2),
-                direction,
-                nextType: nextTide ? nextTide.type : "Unavailable",
-                nextTime: nextTide ? formatSiteTime(nextTide.time) : "N/A",
-                timeUntil: nextTide ? formatDuration(nextTide.time) : "N/A"
+                time: siteNow,
+                value
             };
         }
+    }
 
-        function buildTideChartBackground(sunTimes, xScale, padding, height, firstTime, lastTime) {
-            if (!sunTimes || !sunTimes.sunrise || !sunTimes.sunset) {
-                return "";
-            }
+    return null;
+}
 
-            const sunriseTime = Math.max(sunTimes.sunrise.getTime(), firstTime);
-            const sunsetTime = Math.min(sunTimes.sunset.getTime(), lastTime);
+function buildTideSvg(predictions, highLowPredictions = [], sunTimes = null) {
+    const width = 1100;
+    const height = 520;
+    const padding = 40;
+    const plotTop = 82;
+    const plotBottom = height - 54;
 
-            if (sunsetTime <= firstTime || sunriseTime >= lastTime || sunsetTime <= sunriseTime) {
-                return "";
-            }
+    const chartPredictions = predictions
+        .map(item => ({
+            time: parseSiteDateTime(item.t),
+            value: Number(item.v),
+            ...item
+        }))
+        .sort((a, b) => a.time - b.time);
 
-            const daylightX = xScale(new Date(sunriseTime));
-            const daylightWidth = xScale(new Date(sunsetTime)) - daylightX;
+    const values = chartPredictions.map(item => item.value);
+    const min = Math.min(...values);
+    const max = Math.max(...values);
 
-            return `
-                <rect
-                    x="${daylightX}"
-                    y="${padding}"
-                    width="${daylightWidth}"
-                    height="${height - padding * 2}"
-                    fill="rgba(244,162,97,.08)">
-                </rect>
-            `;
+    const range = max - min;
+    const displayMin = min - range * 0.05;
+    const displayMax = max + range * 0.05;
+
+    const firstTime = chartPredictions[0].time.getTime();
+    const lastTime = chartPredictions[chartPredictions.length - 1].time.getTime();
+    const timeRange = lastTime - firstTime || 1;
+
+    const firstDate = new Date(firstTime);
+    const lastDate = new Date(lastTime);
+
+    const firstWeekday = formatSiteDate(firstDate, {
+        weekday: "long"
+    });
+
+    const lastWeekday = formatSiteDate(lastDate, {
+        weekday: "long"
+    });
+
+    const firstMonth = formatSiteDate(firstDate, {
+        month: "long"
+    });
+
+    const lastMonth = formatSiteDate(lastDate, {
+        month: "long"
+    });
+
+    const firstDay = formatSiteDate(firstDate, {
+        day: "numeric"
+    });
+
+    const lastDay = formatSiteDate(lastDate, {
+        day: "numeric"
+    });
+
+    const chartSubtitle =
+        firstMonth === lastMonth
+            ? `${firstWeekday}&ndash;${lastWeekday} &bull; ${firstMonth} ${firstDay}&ndash;${lastDay}`
+            : `${firstWeekday}&ndash;${lastWeekday} &bull; ${firstMonth} ${firstDay}&ndash;${lastMonth} ${lastDay}`;
+
+    const xScale = date =>
+        padding +
+        ((date.getTime() - firstTime) / timeRange) *
+        (width - padding * 2);
+
+    const yScale = value =>
+        plotBottom -
+        ((value - displayMin) / (displayMax - displayMin || 1)) *
+        (plotBottom - plotTop);
+
+    const points = chartPredictions.map(item => ({
+        x: xScale(item.time),
+        y: yScale(item.value),
+        value: item.value,
+        time: item.time,
+        ...item
+    }));
+
+    const siteNow = getSiteNow();
+
+    const showCurrentMarker =
+        siteNow.getTime() >= firstTime &&
+        siteNow.getTime() <= lastTime;
+
+    const currentX = xScale(siteNow);
+
+    const nextUpcomingTide = highLowPredictions
+        .map(item => ({
+            ...item,
+            time: parseSiteDateTime(item.t)
+        }))
+        .filter(item => item.time > siteNow)
+        .sort((a, b) => a.time - b.time)[0];
+
+    const smoothPath = points.map((point, index) => {
+        if (index === 0) {
+            return `M ${point.x},${point.y}`;
         }
 
-        function getCurrentTideCurvePoint(chartPredictions, siteNow) {
-            const nowTime = siteNow.getTime();
+        const previous = points[index - 1];
 
-            for (let index = 0; index < chartPredictions.length - 1; index++) {
-                const current = chartPredictions[index];
-                const next = chartPredictions[index + 1];
+        const controlX1 = previous.x + (point.x - previous.x) / 2;
+        const controlY1 = previous.y;
 
-                if (nowTime >= current.time.getTime() && nowTime <= next.time.getTime()) {
-                    const timeRange = next.time.getTime() - current.time.getTime();
-                    const progress = timeRange === 0 ? 0 : (nowTime - current.time.getTime()) / timeRange;
-                    const value = current.value + (next.value - current.value) * progress;
+        const controlX2 = previous.x + (point.x - previous.x) / 2;
+        const controlY2 = point.y;
 
-                    return {
-                        time: siteNow,
-                        value
-                    };
-                }
-            }
+        return `C ${controlX1},${controlY1} ${controlX2},${controlY2} ${point.x},${point.y}`;
+    }).join(" ");
 
-            return null;
-        }
+    const fillPath =
+        `${smoothPath} ` +
+        `L ${points[points.length - 1].x},${plotBottom} ` +
+        `L ${points[0].x},${plotBottom} Z`;
 
-        function buildTideSvg(predictions, highLowPredictions = [], sunTimes = null) {
-            const width = 1100;
-            const height = 520;
-            const padding = 40;
+    const chartBackground = buildTideChartBackground(
+        sunTimes,
+        xScale,
+        plotTop,
+        plotBottom,
+        firstTime,
+        lastTime
+    );
 
-            const chartPredictions = predictions
-                .map(item => ({
-                    time: parseSiteDateTime(item.t),
-                    value: Number(item.v),
-                    ...item
-                }))
-                .sort((a, b) => a.time - b.time);
+    const gridCount = 4;
 
-            const values = chartPredictions.map(item => item.value);
-            const min = Math.min(...values);
-            const max = Math.max(...values);
+    const gridLines = Array.from({ length: gridCount + 1 }, (_, index) => {
+        const value = min + ((max - min) / gridCount) * index;
+        const y = yScale(value);
 
-            const range = max - min;
-            const displayMin = min - range * 0.05;
-            const displayMax = max + range * 0.05;
+        return `
+            <line x1="${padding}" y1="${y}" x2="${width - padding}" y2="${y}" stroke="rgba(255,255,255,.16)" stroke-width="1"></line>
+            <text x="${padding - 10}" y="${y + 4}" text-anchor="end" font-size="12" fill="rgba(255,255,255,.7)">
+                ${value.toFixed(1)} ft
+            </text>
+        `;
+    }).join("");
 
-            const firstTime = chartPredictions[0].time.getTime();
-            const lastTime = chartPredictions[chartPredictions.length - 1].time.getTime();
-            const timeRange = lastTime - firstTime || 1;
+    const timeLabels = Array.from({ length: 9 }, (_, index) => {
+        const labelTime = new Date(firstTime + (timeRange / 8) * index);
+        const x = padding + (index / 8) * (width - padding * 2);
+        const label = formatSiteTime(labelTime, { minute: undefined });
 
-            const xScale = date =>
-                padding +
-                ((date.getTime() - firstTime) / timeRange) *
-                (width - padding * 2);
+        return `
+            <line x1="${x}" y1="${plotTop}" x2="${x}" y2="${plotBottom}" stroke="rgba(255,255,255,.10)" stroke-width="1"></line>
+            <text x="${x}" y="${plotBottom + 25}" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.72)">
+                ${label}
+            </text>
+        `;
+    }).join("");
 
-            const yScale = value =>
-                height -
-                padding -
-                ((value - displayMin) / (displayMax - displayMin || 1)) *
-                (height - padding * 2);
+    const labels = highLowPredictions.map(item => {
+        const pointTime = parseSiteDateTime(item.t);
+        const pointValue = Number(item.v);
+        const pointX = xScale(pointTime);
+        const pointY = yScale(pointValue);
+        const time = formatSiteTime(pointTime);
+        const type = item.type === "H" ? "High" : "Low";
 
-            const points = chartPredictions.map(item => ({
-                x: xScale(item.time),
-                y: yScale(item.value),
-                value: item.value,
-                time: item.time,
-                ...item
-            }));
+        const isNextTide =
+            nextUpcomingTide &&
+            pointTime.getTime() === nextUpcomingTide.time.getTime();
 
-            const siteNow = getSiteNow();
+        const markerRadius = isNextTide ? 10 : 7;
+        const markerGlowRadius = isNextTide ? 18 : 13;
+        const markerFill = isNextTide ? "#FFD08A" : "#F4A261";
+        const markerGlow = isNextTide ? "rgba(255,208,138,.55)" : "rgba(244,162,97,.35)";
+        const labelWeight = isNextTide ? "700" : "400";
 
-            const showCurrentMarker =
-                siteNow.getTime() >= firstTime &&
-                siteNow.getTime() <= lastTime;
+        return `
+            <text x="${pointX}" y="${pointY - 45}" text-anchor="middle" font-size="13" font-weight="${labelWeight}" fill="white">
+                ${type} Tide
+            </text>
 
-            const currentX = xScale(siteNow);
+            <text x="${pointX}" y="${pointY - 27}" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">
+                ${time}
+            </text>
 
-            const nextUpcomingTide = highLowPredictions
-                .map(item => ({
-                    ...item,
-                    time: parseSiteDateTime(item.t)
-                }))
-                .filter(item => item.time > siteNow)
-                .sort((a, b) => a.time - b.time)[0];
+            <circle cx="${pointX}" cy="${pointY}" r="${markerRadius}" fill="${markerFill}"></circle>
+            <circle cx="${pointX}" cy="${pointY}" r="${markerGlowRadius}" fill="none" stroke="${markerGlow}" stroke-width="2"></circle>
+        `;
+    }).join("");
 
-            const smoothPath = points.map((point, index) => {
-                if (index === 0) {
-                    return `M ${point.x},${point.y}`;
-                }
+    const currentMarker = showCurrentMarker ? `
+        <line x1="${currentX}" y1="${plotTop}" x2="${currentX}" y2="${plotBottom}" stroke="#F4A261" stroke-width="2" stroke-dasharray="8 6" opacity=".9"></line>
+        <text x="${currentX}" y="${plotTop - 12}" text-anchor="middle" font-size="13" font-weight="bold" fill="#F4A261">
+            NOW
+        </text>
+    ` : "";
 
-                const previous = points[index - 1];
+    return `
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Tide chart for Tuckers Island Homosassa River">
 
-                const controlX1 = previous.x + (point.x - previous.x) / 2;
-                const controlY1 = previous.y;
+            <defs>
+                <linearGradient id="tideFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#8DE3FF" stop-opacity=".7" />
+                    <stop offset="100%" stop-color="#17324D" stop-opacity=".25" />
+                </linearGradient>
 
-                const controlX2 = previous.x + (point.x - previous.x) / 2;
-                const controlY2 = point.y;
+                <filter id="tideGlow">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+            </defs>
 
-                return `C ${controlX1},${controlY1} ${controlX2},${controlY2} ${point.x},${point.y}`;
-            }).join(" ");
+            <text
+                x="${width / 2}"
+                y="28"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="700"
+                fill="#F4A261">
+                48-Hour Tide Forecast &bull; ${chartSubtitle}
+            </text>
 
-            const fillPath =
-                `${smoothPath} ` +
-                `L ${points[points.length - 1].x},${height - padding} ` +
-                `L ${points[0].x},${height - padding} Z`;
+            ${chartBackground}
+            ${gridLines}
+            ${timeLabels}
 
-            const chartBackground = buildTideChartBackground(
-                sunTimes,
-                xScale,
-                padding,
-                height,
-                firstTime,
-                lastTime
-            );
+            <line x1="${padding}" y1="${plotBottom}" x2="${width - padding}" y2="${plotBottom}" stroke="rgba(255,255,255,.35)"></line>
+            <line x1="${padding}" y1="${plotTop}" x2="${padding}" y2="${plotBottom}" stroke="rgba(255,255,255,.35)"></line>
 
-            const gridCount = 4;
+            <path d="${fillPath}" fill="url(#tideFill)"></path>
 
-            const gridLines = Array.from({ length: gridCount + 1 }, (_, index) => {
-                const value = min + ((max - min) / gridCount) * index;
-                const y = yScale(value);
+            <path d="${smoothPath}" fill="none" stroke="#8DE3FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#tideGlow)"></path>
 
-                return `
-                    <line x1="${padding}" y1="${y}" x2="${width - padding}" y2="${y}" stroke="rgba(255,255,255,.16)" stroke-width="1"></line>
-                    <text x="${padding - 10}" y="${y + 4}" text-anchor="end" font-size="12" fill="rgba(255,255,255,.7)">
-                        ${value.toFixed(1)} ft
-                    </text>
-                `;
-            }).join("");
+            ${currentMarker}
+            ${labels}
 
-            const timeLabels = Array.from({ length: 9 }, (_, index) => {
-                const labelTime = new Date(firstTime + (timeRange / 8) * index);
-                const x = padding + (index / 8) * (width - padding * 2);
-                const label = formatSiteTime(labelTime, { minute: undefined });
-
-                return `
-                    <line x1="${x}" y1="${padding}" x2="${x}" y2="${height - padding}" stroke="rgba(255,255,255,.10)" stroke-width="1"></line>
-                    <text x="${x}" y="${height - 12}" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.72)">
-                        ${label}
-                    </text>
-                `;
-            }).join("");
-
-            const labels = highLowPredictions.map(item => {
-                const pointTime = parseSiteDateTime(item.t);
-                const pointValue = Number(item.v);
-                const pointX = xScale(pointTime);
-                const pointY = yScale(pointValue);
-                const time = formatSiteTime(pointTime);
-                const type = item.type === "H" ? "High" : "Low";
-
-                const isNextTide =
-                    nextUpcomingTide &&
-                    pointTime.getTime() === nextUpcomingTide.time.getTime();
-
-                const markerRadius = isNextTide ? 10 : 7;
-                const markerGlowRadius = isNextTide ? 18 : 13;
-                const markerFill = isNextTide ? "#FFD08A" : "#F4A261";
-                const markerGlow = isNextTide ? "rgba(255,208,138,.55)" : "rgba(244,162,97,.35)";
-                const labelWeight = isNextTide ? "700" : "400";
-
-                return `
-                    <text x="${pointX}" y="${pointY - 45}" text-anchor="middle" font-size="13" font-weight="${labelWeight}" fill="white">
-                        ${type} Tide
-                    </text>
-
-                    <text x="${pointX}" y="${pointY - 27}" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">
-                        ${time}
-                    </text>
-
-                    <circle cx="${pointX}" cy="${pointY}" r="${markerRadius}" fill="${markerFill}"></circle>
-                    <circle cx="${pointX}" cy="${pointY}" r="${markerGlowRadius}" fill="none" stroke="${markerGlow}" stroke-width="2"></circle>
-                `;
-            }).join("");
-
-            const currentMarker = showCurrentMarker ? `
-                <line x1="${currentX}" y1="${padding}" x2="${currentX}" y2="${height - padding}" stroke="#F4A261" stroke-width="2" stroke-dasharray="8 6" opacity=".9"></line>
-                <text x="${currentX}" y="${padding - 12}" text-anchor="middle" font-size="13" font-weight="bold" fill="#F4A261">
-                    NOW
-                </text>
-            ` : "";
-
-            return `
-                <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Tide chart for Tuckers Island Homosassa River">
-
-                    <defs>
-                        <linearGradient id="tideFill" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#8DE3FF" stop-opacity=".7" />
-                            <stop offset="100%" stop-color="#17324D" stop-opacity=".25" />
-                        </linearGradient>
-
-                        <filter id="tideGlow">
-                            <feGaussianBlur stdDeviation="3" result="blur" />
-                            <feMerge>
-                                <feMergeNode in="blur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                    </defs>
-
-                    ${chartBackground}
-                    ${gridLines}
-                    ${timeLabels}
-
-                    <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="rgba(255,255,255,.35)"></line>
-                    <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - padding}" stroke="rgba(255,255,255,.35)"></line>
-
-                    <path d="${fillPath}" fill="url(#tideFill)"></path>
-
-                    <path d="${smoothPath}" fill="none" stroke="#8DE3FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#tideGlow)"></path>
-
-                    ${currentMarker}
-                    ${labels}
-
-                </svg>
-            `;
-        }
+        </svg>
+    `;
+}
 
         /* =========================
         COLLAPSIBLE MARINE PANELS
@@ -1134,18 +1155,27 @@ function getMarineNarrative(todaySummary, boatingOutlook, windSpeed) {
 
         function initializeMarineCollapsiblePanels() {
             const panels = document.querySelectorAll(".marine-collapse-panel");
-
+        
+            const defaultPanelStates = {
+                "marine-outlook": "open",
+                "marine-forecast": "collapsed",
+                "marine-tides": "collapsed",
+                "marine-radar": "collapsed"
+            };
+        
             panels.forEach(panel => {
                 const button = panel.querySelector(".marine-panel-toggle");
                 const storageKey = panel.dataset.collapseKey;
                 const savedState = storageKey ? localStorage.getItem(storageKey) : null;
-                const isOpen = savedState !== "collapsed";
-
+                const defaultState = defaultPanelStates[storageKey] || "collapsed";
+                const panelState = savedState || defaultState;
+                const isOpen = panelState === "open";
+        
                 panel.classList.add(isOpen ? "is-open" : "is-collapsed");
-
+        
                 if (button) {
                     button.setAttribute("aria-expanded", String(isOpen));
-
+        
                     button.addEventListener("click", () => {
                         setMarinePanelState(
                             panel,
@@ -1153,10 +1183,10 @@ function getMarineNarrative(todaySummary, boatingOutlook, windSpeed) {
                         );
                     });
                 }
-
+        
                 updateMarinePanelHeight(panel);
             });
-
+        
             window.addEventListener("resize", updateMarinePanelHeights);
         }
 
@@ -1349,13 +1379,30 @@ function loadMoonPhase() {
 }
 
 /* =========================
+   AUTO REFRESH
+========================= */
+
+const MARINE_REFRESH_INTERVAL = 10 * 60 * 1000;
+
+function refreshMarineDashboard() {
+    loadMarineConditions().then(() => {
+        loadMarineAdvisories();
+    });
+
+    loadTideChart();
+}
+
+function startMarineAutoRefresh() {
+    setInterval(() => {
+        refreshMarineDashboard();
+    }, MARINE_REFRESH_INTERVAL);
+}
+
+/* =========================
    INITIALIZATION
 ========================= */
 
 initializeMarineCollapsiblePanels();
 
-loadMarineConditions().then(() => {
-    loadMarineAdvisories();
-});
-
-loadTideChart();
+refreshMarineDashboard();
+startMarineAutoRefresh();

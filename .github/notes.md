@@ -26,3 +26,12 @@
 - make hamburger slide down page with user 
 - embed live river camera instead of a website redirect 
 
+## Marine Forecast update
+- Right now, the dashboard should update each time the page loads:
+- Today’s Outlook: fetches fresh Open-Meteo forecast data on page load.
+- 7-Day River Forecast: fetches fresh Open-Meteo forecast data on page load.
+- Tide chart: fetches NOAA tide predictions for today/tomorrow on page load.
+- Current Tide / Next Tide: calculated from the NOAA data on page load.
+- Sunrise / Sunset: fetches Open-Meteo sun data on page load.
+- Marine Advisories: fetches active NWS alerts on page load.
+- Windy radar: embedded live radar, likely updates independently inside the iframe.
